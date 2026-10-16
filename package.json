@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "validate:season": "tsx scripts/validate-season.ts"
+    "validate:season": "tsx scripts/validate-season.ts",
+    "build:season:skeleton": "tsx scripts/build-season-skeleton.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0",

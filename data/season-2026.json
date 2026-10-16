@@ -1,0 +1,2892 @@
+{
+  "source": {
+    "provider": "Formula 1 official calendar and FIA official championship records",
+    "retrievedAt": "2026-10-16T00:00:00Z",
+    "notes": "Roster and schedule skeleton only. Results are intentionally empty until each final FIA classification is reviewed.",
+    "references": [
+      {
+        "kind": "calendar",
+        "url": "https://www.formula1.com/en/racing/2026",
+        "retrievedAt": "2026-10-16T00:00:00Z"
+      },
+      {
+        "kind": "calendar",
+        "url": "https://www.formula1.com/en/latest/article/official-grand-prix-start-times-for-2026-f1-season-confirmed.2UgPfArqH76tzlOYh21jSG",
+        "retrievedAt": "2026-10-16T00:00:00Z"
+      },
+      {
+        "kind": "entry_list",
+        "url": "https://www.formula1.com/en/drivers",
+        "retrievedAt": "2026-10-16T00:00:00Z"
+      },
+      {
+        "kind": "entry_list",
+        "url": "https://www.formula1.com/en/teams",
+        "retrievedAt": "2026-10-16T00:00:00Z"
+      },
+      {
+        "kind": "entry_list",
+        "url": "https://www.fia.com/events/fia-formula-one-world-championship/season-2026/2026-fia-formula-one-world-championship-entry",
+        "retrievedAt": "2026-10-16T00:00:00Z"
+      },
+      {
+        "kind": "results",
+        "url": "https://www.fia.com/events/fia-formula-one-world-championship/season-2026/2026-classifications",
+        "retrievedAt": "2026-10-16T00:00:00Z"
+      }
+    ]
+  },
+  "season": {
+    "year": 2026,
+    "status": "draft",
+    "rules": {
+      "totalRaces": 23,
+      "maxConstructorUses": 3,
+      "constructorsAtMax": 2,
+      "pointsFormula": "23 - finishing_position"
+    }
+  },
+  "constructors": [
+    {
+      "key": "mercedes",
+      "name": "Mercedes",
+      "color": "#27F4D2"
+    },
+    {
+      "key": "ferrari",
+      "name": "Ferrari",
+      "color": "#E80020"
+    },
+    {
+      "key": "mclaren",
+      "name": "McLaren",
+      "color": "#FF8000"
+    },
+    {
+      "key": "red-bull",
+      "name": "Red Bull Racing",
+      "color": "#3671C6"
+    },
+    {
+      "key": "racing-bulls",
+      "name": "Racing Bulls",
+      "color": "#6692FF"
+    },
+    {
+      "key": "alpine",
+      "name": "Alpine",
+      "color": "#FF87BC"
+    },
+    {
+      "key": "haas",
+      "name": "Haas F1 Team",
+      "color": "#B6BABD"
+    },
+    {
+      "key": "audi",
+      "name": "Audi",
+      "color": "#BB0A30"
+    },
+    {
+      "key": "williams",
+      "name": "Williams",
+      "color": "#64C4FF"
+    },
+    {
+      "key": "aston-martin",
+      "name": "Aston Martin",
+      "color": "#229971"
+    },
+    {
+      "key": "cadillac",
+      "name": "Cadillac",
+      "color": "#C0C0C0"
+    }
+  ],
+  "drivers": [
+    {
+      "code": "RUS",
+      "name": "George Russell"
+    },
+    {
+      "code": "ANT",
+      "name": "Kimi Antonelli"
+    },
+    {
+      "code": "LEC",
+      "name": "Charles Leclerc"
+    },
+    {
+      "code": "HAM",
+      "name": "Lewis Hamilton"
+    },
+    {
+      "code": "NOR",
+      "name": "Lando Norris"
+    },
+    {
+      "code": "PIA",
+      "name": "Oscar Piastri"
+    },
+    {
+      "code": "VER",
+      "name": "Max Verstappen"
+    },
+    {
+      "code": "HAD",
+      "name": "Isack Hadjar"
+    },
+    {
+      "code": "LAW",
+      "name": "Liam Lawson"
+    },
+    {
+      "code": "LIN",
+      "name": "Arvid Lindblad"
+    },
+    {
+      "code": "GAS",
+      "name": "Pierre Gasly"
+    },
+    {
+      "code": "COL",
+      "name": "Franco Colapinto"
+    },
+    {
+      "code": "OCO",
+      "name": "Esteban Ocon"
+    },
+    {
+      "code": "BEA",
+      "name": "Oliver Bearman"
+    },
+    {
+      "code": "HUL",
+      "name": "Nico Hulkenberg"
+    },
+    {
+      "code": "BOR",
+      "name": "Gabriel Bortoleto"
+    },
+    {
+      "code": "SAI",
+      "name": "Carlos Sainz"
+    },
+    {
+      "code": "ALB",
+      "name": "Alexander Albon"
+    },
+    {
+      "code": "ALO",
+      "name": "Fernando Alonso"
+    },
+    {
+      "code": "STR",
+      "name": "Lance Stroll"
+    },
+    {
+      "code": "PER",
+      "name": "Sergio Perez"
+    },
+    {
+      "code": "BOT",
+      "name": "Valtteri Bottas"
+    }
+  ],
+  "races": [
+    {
+      "key": "australia",
+      "roundNumber": 1,
+      "name": "Australian Grand Prix",
+      "startsAt": "2026-03-08T04:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "china",
+      "roundNumber": 2,
+      "name": "Chinese Grand Prix",
+      "startsAt": "2026-03-15T07:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "japan",
+      "roundNumber": 3,
+      "name": "Japanese Grand Prix",
+      "startsAt": "2026-03-29T05:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "miami",
+      "roundNumber": 4,
+      "name": "Miami Grand Prix",
+      "startsAt": "2026-05-03T20:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "canada",
+      "roundNumber": 5,
+      "name": "Canadian Grand Prix",
+      "startsAt": "2026-05-24T20:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "monaco",
+      "roundNumber": 6,
+      "name": "Monaco Grand Prix",
+      "startsAt": "2026-06-07T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "barcelona",
+      "roundNumber": 7,
+      "name": "Spanish Grand Prix — Barcelona-Catalunya",
+      "startsAt": "2026-06-14T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "austria",
+      "roundNumber": 8,
+      "name": "Austrian Grand Prix",
+      "startsAt": "2026-06-28T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "great-britain",
+      "roundNumber": 9,
+      "name": "British Grand Prix",
+      "startsAt": "2026-07-05T14:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "belgium",
+      "roundNumber": 10,
+      "name": "Belgian Grand Prix",
+      "startsAt": "2026-07-19T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "hungary",
+      "roundNumber": 11,
+      "name": "Hungarian Grand Prix",
+      "startsAt": "2026-07-26T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "netherlands",
+      "roundNumber": 12,
+      "name": "Dutch Grand Prix",
+      "startsAt": "2026-08-23T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "italy",
+      "roundNumber": 13,
+      "name": "Italian Grand Prix",
+      "startsAt": "2026-09-06T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "spain",
+      "roundNumber": 14,
+      "name": "Spanish Grand Prix — Madrid",
+      "startsAt": "2026-09-13T13:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "azerbaijan",
+      "roundNumber": 15,
+      "name": "Azerbaijan Grand Prix",
+      "startsAt": "2026-09-26T11:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "bahrain-malaysia",
+      "roundNumber": 16,
+      "name": "Bahrain Grand Prix in Malaysia",
+      "startsAt": "2026-10-04T12:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "singapore",
+      "roundNumber": 17,
+      "name": "Singapore Grand Prix",
+      "startsAt": "2026-10-11T12:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "united-states",
+      "roundNumber": 18,
+      "name": "United States Grand Prix",
+      "startsAt": "2026-10-25T20:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "mexico",
+      "roundNumber": 19,
+      "name": "Mexico City Grand Prix",
+      "startsAt": "2026-11-01T20:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "brazil",
+      "roundNumber": 20,
+      "name": "São Paulo Grand Prix",
+      "startsAt": "2026-11-08T18:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "las-vegas",
+      "roundNumber": 21,
+      "name": "Las Vegas Grand Prix",
+      "startsAt": "2026-11-22T04:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "qatar",
+      "roundNumber": 22,
+      "name": "Qatar Grand Prix",
+      "startsAt": "2026-11-29T16:00:00Z",
+      "status": "scheduled"
+    },
+    {
+      "key": "abu-dhabi",
+      "roundNumber": 23,
+      "name": "Abu Dhabi Grand Prix",
+      "startsAt": "2026-12-06T13:00:00Z",
+      "status": "scheduled"
+    }
+  ],
+  "assignments": [
+    {
+      "raceKey": "australia",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "australia",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "china",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "japan",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "miami",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "canada",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "monaco",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "barcelona",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "austria",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "great-britain",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "belgium",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "hungary",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "azerbaijan",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "bahrain-malaysia",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "singapore",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "brazil",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "las-vegas",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "qatar",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "RUS",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "ANT",
+      "constructorKey": "mercedes"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "LEC",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "HAM",
+      "constructorKey": "ferrari"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "NOR",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "PIA",
+      "constructorKey": "mclaren"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "VER",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "HAD",
+      "constructorKey": "red-bull"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "LAW",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "LIN",
+      "constructorKey": "racing-bulls"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "GAS",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "COL",
+      "constructorKey": "alpine"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "OCO",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "BEA",
+      "constructorKey": "haas"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "HUL",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "BOR",
+      "constructorKey": "audi"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "SAI",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "ALB",
+      "constructorKey": "williams"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "ALO",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "STR",
+      "constructorKey": "aston-martin"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "PER",
+      "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "abu-dhabi",
+      "driverCode": "BOT",
+      "constructorKey": "cadillac"
+    }
+  ],
+  "results": []
+}
