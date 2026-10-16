@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F1 Game 2026 — Fantasy League</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#121826; --panel2:#171f30; --border:#253049;
+    --text:#eaeef5; --muted:#8f99ad; --accent:#e8002d; --accent2:#ff6b6b;
+    --good:#2fbf71; --warn:#f5a623;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.6;}
+  a{color:var(--accent2);}
+  header.top{position:sticky; top:0; z-index:50; background:rgba(11,14,20,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+  .nav{max-width:1180px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
+  .brand{font-weight:800; letter-spacing:.4px; font-size:17px; display:flex; align-items:center;}
+  .mark{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:10px; background:var(--accent);}
+  .nav a.nl{color:var(--muted); text-decoration:none; font-size:14px; font-weight:600; padding:4px 2px;}
+  .nav a.nl:hover{color:var(--text);}
+  main{max-width:1180px; margin:0 auto; padding:30px 20px 88px;}
+  section{margin-bottom:60px; scroll-margin-top:70px;}
+  .kicker{font-size:11px; font-weight:700; letter-spacing:2.2px; text-transform:uppercase; color:var(--accent2); margin-bottom:6px;}
+  h1{font-size:38px; letter-spacing:-.5px; line-height:1.12; text-wrap:balance;}
+  h2{font-size:24px; letter-spacing:-.3px; margin:0 0 6px; text-wrap:balance;}
+  .sub{color:var(--muted); font-size:14px; margin:0 0 24px; max-width:720px;}
+  .hero{background:linear-gradient(135deg,#161d2d,#0e1420 60%); border:1px solid var(--border); border-radius:16px; padding:32px 30px; margin-bottom:52px;}
+  .hero p{color:var(--muted); margin-top:10px; max-width:700px; font-size:15px;}
+  .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;}
+  .chip{background:var(--panel2); border:1px solid var(--border); border-radius:999px; padding:7px 14px; font-size:13px; font-weight:600;}
+  .chip .dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:1px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media(max-width:900px){.grid2{grid-template-columns:1fr;}}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:22px;}
+  .card h3{font-size:15px; margin-bottom:14px;}
+  .table-scroll{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th{text-align:left; color:var(--muted); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.7px; padding:10px 12px; border-bottom:1px solid var(--border); white-space:nowrap;}
+  td{padding:10px 12px; border-bottom:1px solid rgba(38,48,73,.55);}
+  tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:rgba(255,255,255,.025);}
+  .num{text-align:right; font-variant-numeric:tabular-nums;}
+  .rank1{color:#ffd12e; font-weight:800;}
+  select{background:var(--panel2); color:var(--text); border:1px solid var(--border); border-radius:8px; padding:9px 12px; font-size:14px; font-weight:600; margin-bottom:16px;}
+  .statgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:20px;}
+  .stat{background:var(--panel2); border:1px solid var(--border); border-radius:10px; padding:12px 14px;}
+  .stat .k{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.6px;}
+  .stat .v{font-size:22px; font-weight:800; margin-top:4px;}
+  .usage-row{display:flex; align-items:center; gap:12px; padding:8px 4px; border-bottom:1px solid rgba(38,48,73,.55); font-size:14px;}
+  .usage-row:last-child{border-bottom:none;}
+  .usage-row .tname{width:130px; font-weight:600; display:flex; align-items:center; gap:8px;}
+  .swatch{width:11px; height:11px; border-radius:3px; flex:none;}
+  .pips{display:flex; gap:6px;}
+  .pip{width:26px; height:10px; border-radius:5px; background:#2a3448;}
+  .pip.on{background:var(--accent);}
+  .pip.over{background:var(--warn);}
+  .ulabel{margin-left:auto; color:var(--muted); font-size:12px; font-weight:700;}
+  .formula{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin:18px 0 26px;}
+  .fcard{background:var(--panel2); border:1px solid var(--border); border-radius:10px; padding:16px;}
+  .fcard .big{font-size:26px; font-weight:800; color:var(--accent2); letter-spacing:-.3px;}
+  .fcard .cap{font-size:13px; color:var(--muted); margin-top:4px;}
+  .note{background:rgba(245,166,35,.08); border:1px solid rgba(245,166,35,.35); border-radius:10px; padding:14px 16px; font-size:13px; color:#f2c069; margin-top:18px;}
+  .note b{color:#ffd98a;}
+  .flagcell{color:var(--warn); font-weight:700;}
+  canvas{max-width:100%;}
+  .chart-wrap{position:relative; height:380px;}
+  .chart-wrap.tall{height:460px;}
+  footer{border-top:1px solid var(--border); padding:26px 20px; color:var(--muted); font-size:13px; text-align:center;}
+  .legend-note{font-size:12px; color:var(--muted); margin-top:8px;}
+  .pickgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; margin:14px 0;}
+  .pickbtn{display:flex; align-items:center; gap:10px; background:var(--panel2); border:2px solid var(--border); color:var(--text); border-radius:10px; padding:12px; font-size:14px; font-weight:700; cursor:pointer; transition:border-color .15s;}
+  .pickbtn:hover:not(:disabled){border-color:var(--muted);}
+  .pickbtn.sel{border-color:var(--accent); background:rgba(232,0,45,.12);}
+  .pickbtn:disabled{opacity:.45; cursor:not-allowed;}
+  .loginrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; align-items:center;}
+  input.inp{background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:10px 12px; font-size:14px; min-width:220px;}
+  input.inp:focus{outline:none; border-color:var(--accent);}
+  .btn{background:var(--accent); color:#fff; border:none; border-radius:10px; padding:11px 20px; font-size:14px; font-weight:700; cursor:pointer; transition:background .15s;}
+  .btn:hover{background:#c00026;}
+  .btn.ghost{background:transparent; border:1px solid var(--border); color:var(--text);}
+  .btn.ghost:hover{border-color:var(--muted); background:rgba(255,255,255,.04);}
+  .btn:focus-visible, .pickbtn:focus-visible, input.inp:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <nav class="nav">
+    <span class="brand"><span class="mark"></span>F1 GAME 2026</span>
+    <a class="nl" href="#leaderboard">Leaderboard</a>
+    <a class="nl" href="#title-race">Title Race</a>
+    <a class="nl" href="#player">Players</a>
+    <a class="nl" href="#my-pick">My Pick</a>
+    <a class="nl" href="#constructors">Constructors</a>
+    <a class="nl" href="#scoring">Scoring</a>
+    <a class="nl" href="#notes">Notes</a>
+    <span id="navAuth" style="margin-left:auto; display:flex; align-items:center; gap:10px;"></span>
+  </nav>
+</header>
+<main>
+  <div class="hero">
+    <h1>F1 Game 2026 <span style="color:var(--muted); font-weight:400; font-size:20px;">fantasy league</span></h1>
+    <p>13 players. 11 constructors. Each race week, pick one team: your score is the sum of its two drivers' finishing points. Most points at season's end wins.</p>
+    <div class="chips">
+      <span class="chip"><span class="dot" style="background:var(--good)"></span>15 races scored</span>
+      <span class="chip"><span class="dot" style="background:var(--warn)"></span>Sepang (Bahrain slot): picks in, awaiting scoring</span>
+      <span class="chip"><span class="dot" style="background:#6692FF"></span>Saudi Arabia: placeholder, may be rescheduled</span>
+      <span class="chip"><span class="dot" style="background:var(--muted)"></span>Singapore: race day</span>
+    </div>
+  </div>
+
+  <section id="leaderboard">
+    <h2>Leaderboard</h2>
+    <p class="sub">Standings after 15 scored races. Points use the league's 22-for-1st system (see Scoring).</p>
+    <div class="grid2">
+      <div class="card table-scroll"><table id="lbTable">
+        <thead><tr><th>#</th><th>Player</th><th class="num">Points</th><th class="num">Behind</th><th class="num">Avg / race</th><th class="num">Missed</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div class="card"><h3>Total points</h3><div class="chart-wrap"><canvas id="lbChart"></canvas></div></div>
+    </div>
+  </section>
+
+  <section id="title-race">
+    <h2>The Title Race</h2>
+    <p class="sub">Cumulative points across the 15 scored races. Toggle players via the legend.</p>
+    <div class="card"><div class="chart-wrap tall"><canvas id="cumChart"></canvas></div></div>
+  </section>
+
+  <section id="player">
+    <h2>Player Deep Dive</h2>
+    <p class="sub">Per-race scoring, team-usage progress against the 9×2 + 2×3 rule, and rank progression.</p>
+    <select id="playerSelect"></select>
+    <div class="statgrid" id="pStats"></div>
+    <div class="grid2">
+      <div class="card"><h3>Points per race</h3><div class="chart-wrap"><canvas id="pRaceChart"></canvas></div></div>
+      <div class="card"><h3>Championship rank per race</h3><div class="chart-wrap"><canvas id="pRankChart"></canvas></div></div>
+    </div>
+    <div class="card" style="margin-top:22px;"><h3>Constructor usage <span style="color:var(--muted); font-weight:400;">(rule: 9 teams ×2, 2 teams ×3)</span></h3><div id="usageList"></div></div>
+  </section>
+
+  <section id="constructors">
+    <h2>Constructors</h2>
+    <p class="sub">How each team has scored, and how often each team gets picked.</p>
+    <div class="grid2">
+      <div class="card"><h3>Season average points per race</h3><div class="chart-wrap"><canvas id="avgChart"></canvas></div></div>
+      <div class="card"><h3>Team points by race</h3>
+        <select id="raceSelect"></select>
+        <div class="chart-wrap"><canvas id="raceTeamChart"></canvas></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:22px;"><h3>Picks per race (all players)</h3><div class="chart-wrap tall"><canvas id="picksChart"></canvas></div>
+    <p class="legend-note">Stacked counts of how many players picked each constructor each race.</p></div>
+  </section>
+
+  <section id="my-pick">
+    <h2>My Pick</h2>
+    <p class="sub">Log in, then submit your constructor pick any time before the race starts. Change it as often as you like until the deadline. Then picks lock and everyone's picks are revealed at once.</p>
+    <div class="card" id="loginCard">
+      <h3>Log in</h3>
+      <p class="legend-note" style="margin:0 0 4px;">Demo only: your login lives in this browser (localStorage). No real account is created and nothing leaves your device.</p>
+      <div class="loginrow">
+        <input class="inp" id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        <input class="inp" id="loginPw" type="password" placeholder="Password (optional)" autocomplete="current-password">
+        <button class="btn" id="loginBtn">Log in</button>
+      </div>
+      <p class="legend-note" id="loginErr" style="color:var(--accent2); display:none;">Please enter a valid email.</p>
+    </div>
+    <div id="pickUI" style="display:none;">
+      <div class="card" style="margin-bottom:22px;">
+        <h3 id="nextRaceTitle">Next race</h3>
+        <p class="sub" id="lockInfo" style="margin-bottom:6px;"></p>
+        <div class="pickgrid" id="teamGrid"></div>
+        <div class="loginrow">
+          <button class="btn" id="submitPick">Submit pick</button>
+          <span class="legend-note" id="pickStatus" style="margin-top:0;"></span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>League picks <span style="color:var(--muted); font-weight:400;" id="picksRaceName"></span></h3>
+        <p class="legend-note" style="margin:0 0 12px;" id="picksNote"></p>
+        <div class="table-scroll"><table id="leaguePicks"><thead><tr><th>Player</th><th>Pick</th></tr></thead><tbody></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="scoring">
+    <h2>Scoring System</h2>
+    <p class="sub">The exact formula the league runs on, computed live below from real 2026 race results.</p>
+    <div class="formula">
+      <div class="fcard"><div class="big">23 − position</div><div class="cap">Points per driver. 1st = 22 pts, 2nd = 21 … 22nd = 1 pt.</div></div>
+      <div class="fcard"><div class="big">0 pts</div><div class="cap">DNF, DNS and disqualification all score zero, even if classified.</div></div>
+      <div class="fcard"><div class="big">Driver A + Driver B</div><div class="cap">Team score = sum of its two drivers. Maximum 43 per race.</div></div>
+    </div>
+    <div class="card">
+      <h3>Worked example: select a race</h3>
+      <select id="demoRace"></select>
+      <div class="table-scroll"><table id="demoTable">
+        <thead><tr><th>Pos</th><th>Driver</th><th>Constructor</th><th>Status</th><th class="num">Driver pts</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div id="demoTeams" style="margin-top:16px;"></div>
+      <div class="note" id="demoNote" style="display:none;"></div>
+    </div>
+  </section>
+
+  <section id="notes">
+    <h2>Data Notes</h2>
+    <div class="card">
+      <table>
+        <tbody>
+          <tr><td><b>Sepang (Bahrain slot)</b></td><td>12 picks submitted for the rescheduled Bahrain GP at Sepang (Oct 4). Awaiting scoring: Red Bull ×4 → 40 pts, Ferrari ×1 → 39, Aston Martin ×4 → 26, Audi ×1 → 17, Haas ×1 → 17, Cadillac ×1 → 4.</td></tr>
+          <tr><td><b>Saudi Arabia</b></td><td>Held as a placeholder in case the Jeddah race is rescheduled, keeping the season at 24 races.</td></tr>
+          <tr><td><b>Singapore</b></td><td>Race day, no data yet.</td></tr>
+          <tr><td><b>Scoring corrections</b></td><td>Two constructor cells differ from real results (no player impact; neither team was picked those weeks): Australia Aston Martin 0 → 6, Barcelona Williams 11 → 16.</td></tr>
+          <tr><td><b>Usage rule</b></td><td>9 teams ×2 + 2 teams ×3 = 24 races. Para Raman has used Ferrari 4× (over the max).</td></tr>
+          <tr><td><b>Ranks</b></td><td>The sheet lists places 2–14; this site uses proper 1–13 championship ranks.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer>F1 Game 2026 · demo site · data as of Oct 11, 2026 · not affiliated with Formula 1</footer>
+<script>
+const DATA = {"races":["Australia","China","Japan","Miami","Canada","Monaco","Barcelona","Austria","Britain","Belgium","Hungary","Netherlands","Italy","Spain","Azerbaijan"],"teams":["mercedes","ferrari","redbull","mclaren","racingbulls","alpine","audi","haas","williams","cadillac","astonmartin"],"teamRace":{"mercedes":[43.0,43.0,41.0,41.0,22.0,33.0,21.0,42.0,29.0,22.0,36.0,41.0,43.0,40.0,40.0],"ferrari":[39.0,39.0,37.0,32.0,40.0,21.0,22.0,33.0,42.0,40.0,37.0,37.0,17.0,19.0,36.0],"redbull":[17.0,15.0,26.0,18.0,38.0,20.0,36.0,38.0,18.0,37.0,38.0,16.0,29.0,38.0,41.0],"mclaren":[18.0,0.0,39.0,41.0,12.0,19.0,38.0,35.0,31.0,34.0,22.0,39.0,37.0,35.0,10.0],"racingbulls":[25.0,27.0,23.0,9.0,16.0,35.0,29.0,27.0,33.0,25.0,28.0,23.0,28.0,23.0,27.0],"alpine":[22.0,30.0,23.0,16.0,32.0,25.0,29.0,18.0,27.0,25.0,19.0,22.0,30.0,27.0,0.0],"audi":[14.0,12.0,22.0,11.0,21.0,22.0,12.0,23.0,15.0,25.0,26.0,25.0,23.0,23.0,20.0],"haas":[28.0,27.0,13.0,22.0,22.0,14.0,10.0,16.0,21.0,15.0,11.0,0.0,15.0,19.0,29.0],"williams":[19.0,14.0,11.0,27.0,14.0,15.0,11.0,6.0,6.0,15.0,11.0,7.0,16.0,8.0,13.0],"cadillac":[7.0,18.0,10.0,12.0,7.0,8.0,9.0,0.0,16.0,5.0,0.0,8.0,9.0,5.0,9.0],"astonmartin":[0.0,0.0,5.0,14.0,8.0,13.0,0.0,5.0,9.0,4.0,19.0,14.0,0.0,6.0,0.0]},"players":["Logan McLane","Cooper McGuire","Jamie & Meg McLane","Cait McLane","Josh McLane","Para Raman","Ted Schelble","Adam Alyyan","Arun Agarwal","Cory Cunningham","Kai McKinney","Eric Turner","Max Stoiber"],"playerRace":{"Logan McLane":[43.0,43.0,37.0,16.0,12.0,20.0,38.0,27.0,42.0,25.0,38.0,25.0,30.0,8.0,29.0],"Cooper McGuire":[14.0,43.0,41.0,16.0,21.0,15.0,29.0,33.0,42.0,25.0,22.0,39.0,30.0,38.0,13.0],"Jamie & Meg McLane":[43.0,39.0,39.0,32.0,22.0,20.0,36.0,27.0,33.0,25.0,22.0,25.0,30.0,19.0,0.0],"Cait McLane":[43.0,43.0,37.0,18.0,12.0,15.0,12.0,27.0,33.0,25.0,37.0,16.0,30.0,27.0,13.0],"Josh McLane":[43.0,43.0,37.0,16.0,12.0,20.0,12.0,27.0,42.0,25.0,22.0,16.0,30.0,8.0,29.0],"Para Raman":[14.0,30.0,23.0,41.0,22.0,21.0,21.0,33.0,33.0,25.0,22.0,22.0,15.0,38.0,13.0],"Ted Schelble":[39.0,30.0,41.0,32.0,22.0,20.0,29.0,23.0,18.0,15.0,11.0,39.0,15.0,6.0,9.0],"Adam Alyyan":[43.0,43.0,39.0,32.0,12.0,20.0,22.0,null,null,25.0,28.0,25.0,30.0,23.0,0.0],"Arun Agarwal":[43.0,43.0,22.0,16.0,16.0,21.0,36.0,27.0,15.0,5.0,22.0,22.0,15.0,8.0,29.0],"Cory Cunningham":[25.0,0.0,41.0,18.0,12.0,21.0,29.0,38.0,42.0,25.0,26.0,22.0,null,27.0,13.0],"Kai McKinney":[43.0,43.0,39.0,18.0,12.0,20.0,null,23.0,null,25.0,26.0,7.0,30.0,5.0,29.0],"Eric Turner":[43.0,43.0,39.0,18.0,16.0,21.0,12.0,null,42.0,25.0,22.0,null,null,null,0.0],"Max Stoiber":[null,43.0,null,41.0,22.0,20.0,12.0,null,31.0,25.0,0.0,25.0,23.0,6.0,null]},"usage":{"Logan McLane":{"mercedes":2,"ferrari":0,"redbull":2,"mclaren":0,"racingbulls":3,"alpine":1,"audi":2,"haas":2,"williams":1,"cadillac":2,"astonmartin":1},"Cooper McGuire":{"mercedes":2,"ferrari":1,"redbull":2,"mclaren":0,"racingbulls":3,"alpine":0,"audi":2,"haas":2,"williams":2,"cadillac":1,"astonmartin":2},"Jamie & Meg McLane":{"mercedes":2,"ferrari":0,"redbull":2,"mclaren":1,"racingbulls":3,"alpine":1,"audi":2,"haas":2,"williams":2,"cadillac":2,"astonmartin":0},"Cait McLane":{"mercedes":2,"ferrari":1,"redbull":2,"mclaren":0,"racingbulls":2,"alpine":0,"audi":1,"haas":2,"williams":2,"cadillac":2,"astonmartin":2},"Josh McLane":{"mercedes":2,"ferrari":1,"redbull":2,"mclaren":0,"racingbulls":2,"alpine":1,"audi":2,"haas":2,"williams":1,"cadillac":2,"astonmartin":1},"Para Raman":{"mercedes":2,"ferrari":0,"redbull":2,"mclaren":0,"racingbulls":4,"alpine":1,"audi":2,"haas":2,"williams":2,"cadillac":2,"astonmartin":1},"Ted Schelble":{"mercedes":1,"ferrari":1,"redbull":2,"mclaren":1,"racingbulls":2,"alpine":2,"audi":1,"haas":2,"williams":1,"cadillac":2,"astonmartin":2},"Adam Alyyan":{"mercedes":2,"ferrari":0,"redbull":2,"mclaren":0,"racingbulls":2,"alpine":1,"audi":2,"haas":2,"williams":2,"cadillac":2,"astonmartin":0},"Arun Agarwal":{"mercedes":2,"ferrari":1,"redbull":2,"mclaren":1,"racingbulls":2,"alpine":2,"audi":1,"haas":2,"williams":2,"cadillac":1,"astonmartin":1},"Cory Cunningham":{"mercedes":2,"ferrari":0,"redbull":3,"mclaren":0,"racingbulls":2,"alpine":0,"audi":2,"haas":1,"williams":2,"cadillac":2,"astonmartin":1},"Kai McKinney":{"mercedes":2,"ferrari":0,"redbull":2,"mclaren":1,"racingbulls":0,"alpine":1,"audi":2,"haas":2,"williams":0,"cadillac":2,"astonmartin":1},"Eric Turner":{"mercedes":1,"ferrari":0,"redbull":2,"mclaren":0,"racingbulls":3,"alpine":0,"audi":2,"haas":2,"williams":1,"cadillac":2,"astonmartin":0},"Max Stoiber":{"mercedes":0,"ferrari":1,"redbull":3,"mclaren":1,"racingbulls":0,"alpine":1,"audi":2,"haas":1,"williams":1,"cadillac":2,"astonmartin":0}},"dns":{"Logan McLane":2,"Cooper McGuire":1,"Jamie & Meg McLane":1,"Cait McLane":2,"Josh McLane":2,"Para Raman":0,"Ted Schelble":1,"Adam Alyyan":3,"Arun Agarwal":1,"Cory Cunningham":3,"Kai McKinney":5,"Eric Turner":5,"Max Stoiber":6},"picks":{"mercedes":[8,9,3,0,3,0,1,0,0,0,0,0,0,0,0],"ferrari":[1,1,3,3,0,4,1,2,5,0,1,0,0,0,0],"redbull":[0,0,0,4,0,7,2,1,1,0,1,2,0,2,0],"mclaren":[0,1,4,2,6,0,1,0,1,0,6,2,0,0,0],"racingbulls":[1,0,1,0,2,0,3,5,3,3,1,0,0,0,0],"alpine":[0,2,0,4,0,0,0,0,0,1,0,3,7,2,3],"audi":[2,0,1,0,1,0,4,2,1,7,2,4,1,1,0],"haas":[0,0,0,0,1,0,0,0,0,0,0,0,3,1,4],"williams":[0,0,0,0,0,2,0,0,0,1,1,1,0,3,4],"cadillac":[0,0,0,0,0,0,0,0,0,1,1,0,0,1,1],"astonmartin":[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0]},"sepangPicks":{"mercedes":0,"ferrari":1,"redbull":4,"mclaren":0,"racingbulls":0,"alpine":0,"audi":1,"haas":1,"williams":0,"cadillac":1,"astonmartin":4},"realResults":{"Australia":[["RUS","mercedes",1,1],["ANT","mercedes",2,1],["LEC","ferrari",3,1],["HAM","ferrari",4,1],["NOR","mclaren",5,1],["VER","redbull",6,1],["BEA","haas",7,1],["LIN","racingbulls",8,1],["BOR","audi",9,1],["GAS","alpine",10,1],["OCO","haas",11,1],["ALB","williams",12,1],["LAW","racingbulls",13,1],["COL","alpine",14,1],["SAI","williams",15,1],["PER","cadillac",16,1],["STR","astonmartin",17,1],["ALO","astonmartin",18,0],["BOT","cadillac",19,0],["HAD","redbull",20,0],["PIA","mclaren",21,0],["HUL","audi",22,0]],"China":[["ANT","mercedes",1,1],["RUS","mercedes",2,1],["HAM","ferrari",3,1],["LEC","ferrari",4,1],["BEA","haas",5,1],["GAS","alpine",6,1],["LAW","racingbulls",7,1],["HAD","redbull",8,1],["SAI","williams",9,1],["COL","alpine",10,1],["HUL","audi",11,1],["LIN","racingbulls",12,1],["BOT","cadillac",13,1],["OCO","haas",14,1],["PER","cadillac",15,1],["VER","redbull",16,0],["ALO","astonmartin",17,0],["STR","astonmartin",18,0],["PIA","mclaren",19,0],["NOR","mclaren",20,0],["BOR","audi",21,0],["ALB","williams",22,0]],"Japan":[["ANT","mercedes",1,1],["PIA","mclaren",2,1],["LEC","ferrari",3,1],["RUS","mercedes",4,1],["NOR","mclaren",5,1],["HAM","ferrari",6,1],["GAS","alpine",7,1],["VER","redbull",8,1],["LAW","racingbulls",9,1],["OCO","haas",10,1],["HUL","audi",11,1],["HAD","redbull",12,1],["BOR","audi",13,1],["LIN","racingbulls",14,1],["SAI","williams",15,1],["COL","alpine",16,1],["PER","cadillac",17,1],["ALO","astonmartin",18,1],["BOT","cadillac",19,1],["ALB","williams",20,1],["STR","astonmartin",21,0],["BEA","haas",22,0]],"Miami":[["ANT","mercedes",1,1],["NOR","mclaren",2,1],["PIA","mclaren",3,1],["RUS","mercedes",4,1],["VER","redbull",5,1],["HAM","ferrari",6,1],["COL","alpine",7,1],["LEC","ferrari",8,1],["SAI","williams",9,1],["ALB","williams",10,1],["BEA","haas",11,1],["BOR","audi",12,1],["OCO","haas",13,1],["LIN","racingbulls",14,1],["ALO","astonmartin",15,1],["PER","cadillac",16,1],["STR","astonmartin",17,1],["BOT","cadillac",18,1],["HUL","audi",19,0],["LAW","racingbulls",20,0],["GAS","alpine",21,0],["HAD","redbull",22,0]],"Canada":[["ANT","mercedes",1,1],["HAM","ferrari",2,1],["VER","redbull",3,1],["LEC","ferrari",4,1],["HAD","redbull",5,1],["COL","alpine",6,1],["LAW","racingbulls",7,1],["GAS","alpine",8,1],["SAI","williams",9,1],["BEA","haas",10,1],["PIA","mclaren",11,1],["HUL","audi",12,1],["BOR","audi",13,1],["OCO","haas",14,1],["STR","astonmartin",15,1],["BOT","cadillac",16,1],["PER","cadillac",17,0],["NOR","mclaren",18,0],["RUS","mercedes",19,0],["ALO","astonmartin",20,0],["ALB","williams",21,0],["LIN","racingbulls",22,0]],"Monaco":[["ANT","mercedes",1,1],["HAM","ferrari",2,1],["HAD","redbull",3,1],["PIA","mclaren",4,1],["LAW","racingbulls",5,1],["LIN","racingbulls",6,1],["GAS","alpine",7,1],["ALB","williams",8,1],["OCO","haas",9,1],["ALO","astonmartin",10,1],["BOR","audi",11,1],["RUS","mercedes",12,1],["HUL","audi",13,1],["COL","alpine",14,1],["PER","cadillac",15,1],["SAI","williams",16,0],["LEC","ferrari",17,0],["STR","astonmartin",18,0],["NOR","mclaren",19,0],["BEA","haas",20,0],["BOT","cadillac",21,0],["VER","redbull",22,0]],"Barcelona":[["HAM","ferrari",1,1],["RUS","mercedes",2,1],["NOR","mclaren",3,1],["VER","redbull",4,1],["PIA","mclaren",5,1],["HAD","redbull",6,1],["GAS","alpine",7,1],["LAW","racingbulls",8,1],["LIN","racingbulls",9,1],["COL","alpine",10,1],["BOR","audi",11,1],["SAI","williams",12,1],["OCO","haas",13,1],["PER","cadillac",14,1],["LEC","ferrari",15,0],["ANT","mercedes",16,0],["BEA","haas",17,0],["ALB","williams",18,1],["ALO","astonmartin",19,0],["HUL","audi",20,0],["BOT","cadillac",21,0],["STR","astonmartin",22,0]],"Austria":[["RUS","mercedes",1,1],["VER","redbull",2,1],["ANT","mercedes",3,1],["PIA","mclaren",4,1],["HAM","ferrari",5,1],["HAD","redbull",6,1],["NOR","mclaren",7,1],["LEC","ferrari",8,1],["LAW","racingbulls",9,1],["LIN","racingbulls",10,1],["BOR","audi",11,1],["HUL","audi",12,1],["GAS","alpine",13,1],["BEA","haas",14,1],["COL","alpine",15,1],["OCO","haas",16,1],["ALB","williams",17,1],["ALO","astonmartin",18,1],["STR","astonmartin",19,0],["SAI","williams",20,0],["PER","cadillac",21,0],["BOT","cadillac",22,0]],"Britain":[["LEC","ferrari",1,1],["RUS","mercedes",2,1],["HAM","ferrari",3,1],["NOR","mclaren",4,1],["HAD","redbull",5,1],["LAW","racingbulls",6,1],["LIN","racingbulls",7,1],["BOR","audi",8,1],["COL","alpine",9,1],["GAS","alpine",10,1],["PIA","mclaren",11,1],["BEA","haas",12,1],["OCO","haas",13,1],["PER","cadillac",14,1],["ANT","mercedes",15,1],["BOT","cadillac",16,1],["SAI","williams",17,1],["ALO","astonmartin",18,1],["STR","astonmartin",19,1],["VER","redbull",20,0],["ALB","williams",21,0],["HUL","audi",22,0]],"Belgium":[["ANT","mercedes",1,1],["LEC","ferrari",2,1],["VER","redbull",3,1],["HAM","ferrari",4,1],["PIA","mclaren",5,1],["HAD","redbull",6,1],["NOR","mclaren",7,1],["BOR","audi",8,1],["LIN","racingbulls",9,1],["COL","alpine",10,1],["GAS","alpine",11,1],["LAW","racingbulls",12,1],["HUL","audi",13,1],["BEA","haas",14,1],["ALB","williams",15,1],["SAI","williams",16,1],["OCO","haas",17,1],["BOT","cadillac",18,1],["ALO","astonmartin",19,1],["STR","astonmartin",20,0],["PER","cadillac",21,0],["RUS","mercedes",22,0]],"Hungary":[["NOR","mclaren",1,1],["VER","redbull",2,1],["ANT","mercedes",3,1],["LEC","ferrari",4,1],["HAM","ferrari",5,1],["HAD","redbull",6,1],["RUS","mercedes",7,1],["LAW","racingbulls",8,1],["HUL","audi",9,1],["LIN","racingbulls",10,1],["BOR","audi",11,1],["GAS","alpine",12,1],["STR","astonmartin",13,1],["ALO","astonmartin",14,1],["COL","alpine",15,1],["OCO","haas",16,1],["ALB","williams",17,1],["SAI","williams",18,1],["BEA","haas",19,1],["PIA","mclaren",20,0],["PER","cadillac",21,0],["BOT","cadillac",22,0]],"Netherlands":[["NOR","mclaren",1,1],["ANT","mercedes",2,1],["RUS","mercedes",3,1],["HAM","ferrari",4,1],["LEC","ferrari",5,1],["PIA","mclaren",6,1],["LAW","redbull",7,1],["HUL","audi",8,1],["ALO","astonmartin",9,1],["GAS","alpine",10,1],["TSU","racingbulls",11,1],["LIN","racingbulls",12,1],["BOR","audi",13,1],["COL","alpine",14,1],["PER","cadillac",15,1],["SAI","williams",16,1],["ALB","williams",17,0],["BOT","cadillac",18,0],["OCO","haas",19,0],["STR","astonmartin",20,0],["BEA","haas",21,0],["VER","redbull",22,0]],"Italy":[["ANT","mercedes",1,1],["RUS","mercedes",2,1],["VER","redbull",3,1],["NOR","mclaren",4,1],["PIA","mclaren",5,1],["HAM","ferrari",6,1],["GAS","alpine",7,1],["LIN","racingbulls",8,1],["COL","alpine",9,1],["TSU","racingbulls",10,1],["BOR","audi",11,1],["HUL","audi",12,1],["SAI","williams",13,1],["LAW","redbull",14,1],["BEA","haas",15,1],["OCO","haas",16,1],["ALB","williams",17,1],["PER","cadillac",18,1],["BOT","cadillac",19,1],["STR","astonmartin",20,0],["ALO","astonmartin",21,0],["LEC","ferrari",22,0]],"Spain":[["ANT","mercedes",1,1],["VER","redbull",2,1],["NOR","mclaren",3,1],["LEC","ferrari",4,1],["RUS","mercedes",5,1],["LAW","redbull",6,1],["COL","alpine",7,1],["PIA","mclaren",8,1],["LIN","racingbulls",9,1],["HUL","audi",10,1],["OCO","haas",11,1],["GAS","alpine",12,1],["BOR","audi",13,1],["TSU","racingbulls",14,1],["ALB","williams",15,1],["BEA","haas",16,1],["ALO","astonmartin",17,1],["BOT","cadillac",18,1],["SAI","williams",19,0],["PER","cadillac",20,0],["STR","astonmartin",21,0],["HAM","ferrari",22,0]],"Azerbaijan":[["RUS","mercedes",1,1],["VER","redbull",2,1],["HAD","redbull",3,1],["LEC","ferrari",4,1],["ANT","mercedes",5,1],["HAM","ferrari",6,1],["LIN","racingbulls",7,1],["OCO","haas",8,1],["BEA","haas",9,1],["SAI","williams",10,1],["HUL","audi",11,1],["LAW","racingbulls",12,1],["PIA","mclaren",13,1],["PER","cadillac",14,1],["BOR","audi",15,1],["BOT","cadillac",16,0],["COL","alpine",17,0],["GAS","alpine",18,0],["NOR","mclaren",19,0],["ALB","williams",20,0],["ALO","astonmartin",21,0],["STR","astonmartin",22,0]],"Sepang":[["VER","redbull",1,1],["ANT","mercedes",2,1],["HAM","ferrari",3,1],["LEC","ferrari",4,1],["HAD","redbull",5,1],["PIA","mclaren",6,1],["LAW","racingbulls",7,1],["ALO","astonmartin",8,1],["NOR","mclaren",9,1],["LIN","racingbulls",10,1],["HUL","audi",11,1],["STR","astonmartin",12,1],["COL","alpine",13,1],["BEA","haas",14,1],["OCO","haas",15,1],["GAS","alpine",16,1],["SAI","williams",17,1],["BOR","audi",18,1],["PER","cadillac",19,1],["RUS","mercedes",20,0],["ALB","williams",21,0],["BOT","cadillac",22,0]]}};
+
+const TEAM_META = {
+  mercedes:{name:'Mercedes',color:'#27F4D2'}, ferrari:{name:'Ferrari',color:'#E8002D'},
+  redbull:{name:'Red Bull',color:'#3671C6'}, mclaren:{name:'McLaren',color:'#FF8000'},
+  racingbulls:{name:'Racing Bulls',color:'#6692FF'}, alpine:{name:'Alpine',color:'#FF87BC'},
+  audi:{name:'Audi',color:'#B6BABD'}, haas:{name:'Haas',color:'#E8E8E8'},
+  williams:{name:'Williams',color:'#64C4FF'}, cadillac:{name:'Cadillac',color:'#D4AF37'},
+  astonmartin:{name:'Aston Martin',color:'#229971'}
+};
+const PLAYER_COLORS = ['#E8002D','#FF8000','#FFD12E','#27F4D2','#3671C6','#6692FF','#B38AFF','#FF87BC','#229971','#64C4FF','#B6BABD','#E8E8E8','#D4AF37'];
+const playerColor = {};
+DATA.players.forEach((p,i)=>{ playerColor[p]=PLAYER_COLORS[i%PLAYER_COLORS.length]; });
+const RACES = DATA.races, TEAMS = DATA.teams, PLAYERS = DATA.players;
+const $ = id=>document.getElementById(id);
+const tname = id=>TEAM_META[id].name, tcolor = id=>TEAM_META[id].color;
+const val = v=> (v==null?0:v);
+
+Chart.defaults.color = '#8b95a9';
+Chart.defaults.borderColor = 'rgba(38,48,73,.6)';
+Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+
+// ---------- derived ----------
+const totals = {}; PLAYERS.forEach(p=>{ totals[p]=DATA.playerRace[p].reduce((a,v)=>a+val(v),0); });
+const order = [...PLAYERS].sort((a,b)=>totals[b]-totals[a]);
+const leader = totals[order[0]];
+const cum = {}; PLAYERS.forEach(p=>{ let s=0; cum[p]=DATA.playerRace[p].map(v=>{ s+=val(v); return s; }); });
+function rankAt(raceIdx){ // competition rank per player at race idx
+  const arr = PLAYERS.map(p=>({p, s:cum[p][raceIdx]})).sort((a,b)=>b.s-a.s);
+  const r={}; let lastS=null,lastR=0;
+  arr.forEach((e,i)=>{ if(e.s!==lastS){lastR=i+1;lastS=e.s;} r[e.p]=lastR; });
+  return r;
+}
+
+// ---------- leaderboard ----------
+(function(){
+  const tb = document.querySelector('#lbTable tbody');
+  order.forEach((p,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML = `<td class="${i===0?'rank1':''}">${i+1}</td><td><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${playerColor[p]};margin-right:8px;"></span>${p}</td>
+      <td class="num"><b>${totals[p]}</b></td><td class="num">${i===0?'·':(totals[p]-leader)}</td>
+      <td class="num">${(totals[p]/RACES.length).toFixed(1)}</td><td class="num">${DATA.dns[p]||0}</td>`;
+    tb.appendChild(tr);
+  });
+  new Chart($('lbChart'),{type:'bar',
+    data:{labels:order, datasets:[{data:order.map(p=>totals[p]), backgroundColor:order.map(p=>playerColor[p]), borderRadius:5}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true}}, maintainAspectRatio:false}});
+})();
+
+// ---------- title race ----------
+new Chart($('cumChart'),{type:'line',
+  data:{labels:RACES, datasets:order.map(p=>({label:p, data:cum[p], borderColor:playerColor[p], backgroundColor:playerColor[p], tension:.25, pointRadius:0, borderWidth:2}))},
+  options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, padding:12}}}, scales:{y:{beginAtZero:true}}, maintainAspectRatio:false}});
+
+// ---------- player explorer ----------
+const pSel=$('playerSelect');
+PLAYERS.forEach(p=>{ const o=document.createElement('option'); o.value=p; o.textContent=p; pSel.appendChild(o); });
+pSel.value='Cooper McGuire';
+let pRaceChart=null, pRankChart=null;
+function renderPlayer(){
+  const p=pSel.value, scores=DATA.playerRace[p];
+  const rk = order.indexOf(p)+1;
+  const best=Math.max(...scores.map(val)), worst=Math.min(...scores.map(val));
+  const u3 = TEAMS.filter(t=>DATA.usage[p][t]===3), over = TEAMS.filter(t=>DATA.usage[p][t]>3);
+  $('pStats').innerHTML = `
+    <div class="stat"><div class="k">Total</div><div class="v">${totals[p]}</div></div>
+    <div class="stat"><div class="k">Rank</div><div class="v">${rk} / 13</div></div>
+    <div class="stat"><div class="k">Avg / race</div><div class="v">${(totals[p]/RACES.length).toFixed(1)}</div></div>
+    <div class="stat"><div class="k">Best race</div><div class="v">${best}</div></div>
+    <div class="stat"><div class="k">Teams at 3×</div><div class="v">${u3.length?u3.map(tname).join(', '):'·'}</div></div>
+    <div class="stat"><div class="k">Races missed</div><div class="v">${DATA.dns[p]||0}</div></div>`;
+  if(pRaceChart) pRaceChart.destroy();
+  pRaceChart = new Chart($('pRaceChart'),{type:'bar',
+    data:{labels:RACES, datasets:[{data:scores.map(val), backgroundColor:playerColor[p], borderRadius:4}]},
+    options:{plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}, x:{ticks:{maxRotation:60}}}, maintainAspectRatio:false}});
+  const ranks = RACES.map((_,i)=>rankAt(i)[p]);
+  if(pRankChart) pRankChart.destroy();
+  pRankChart = new Chart($('pRankChart'),{type:'line',
+    data:{labels:RACES, datasets:[{data:ranks, borderColor:playerColor[p], backgroundColor:playerColor[p], tension:.25, fill:false}]},
+    options:{plugins:{legend:{display:false}}, scales:{y:{reverse:true, min:1, max:13, ticks:{stepSize:1}}, x:{ticks:{maxRotation:60}}}, maintainAspectRatio:false}});
+  $('usageList').innerHTML = TEAMS.map(t=>{
+    const n=DATA.usage[p][t];
+    let pips='';
+    for(let i=0;i<3;i++) pips+=`<span class="pip ${i<n?'on':''} ${n>3&&i===2?'over':''}"></span>`;
+    const lbl = n>3?`<span class="flagcell">${n}× (over max)</span>` : n===3?'3× (maxed)': n===2?'2×': n===1?'1×':'·';
+    return `<div class="usage-row"><span class="tname"><span class="swatch" style="background:${tcolor(t)}"></span>${tname(t)}</span><span class="pips">${pips}</span><span class="ulabel">${lbl}</span></div>`;
+  }).join('');
+}
+pSel.addEventListener('change', renderPlayer);
+renderPlayer();
+
+// ---------- constructors ----------
+new Chart($('avgChart'),{type:'bar',
+  data:{labels:TEAMS.map(tname), datasets:[{data:TEAMS.map(t=>DATA.teamRace[t].reduce((a,v)=>a+val(v),0)/RACES.length), backgroundColor:TEAMS.map(tcolor), borderRadius:5}]},
+  options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true}}, maintainAspectRatio:false}});
+
+const rSel=$('raceSelect');
+RACES.forEach(r=>{ const o=document.createElement('option'); o.value=r; o.textContent=r; rSel.appendChild(o); });
+let raceTeamChart=null;
+function renderRaceTeams(){
+  const r=rSel.value;
+  const rows = TEAMS.map(t=>({t, v:val(DATA.teamRace[t][RACES.indexOf(r)])})).sort((a,b)=>b.v-a.v);
+  if(raceTeamChart) raceTeamChart.destroy();
+  raceTeamChart = new Chart($('raceTeamChart'),{type:'bar',
+    data:{labels:rows.map(e=>tname(e.t)), datasets:[{data:rows.map(e=>e.v), backgroundColor:rows.map(e=>tcolor(e.t)), borderRadius:5}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true,max:45}}, maintainAspectRatio:false}});
+}
+rSel.addEventListener('change', renderRaceTeams);
+renderRaceTeams();
+
+new Chart($('picksChart'),{type:'bar',
+  data:{labels:RACES, datasets:TEAMS.map(t=>({label:tname(t), data:DATA.picks[t], backgroundColor:tcolor(t)}))},
+  options:{plugins:{legend:{position:'bottom', labels:{boxWidth:12, padding:10}}}, scales:{x:{stacked:true, ticks:{maxRotation:60}}, y:{stacked:true, beginAtZero:true, ticks:{stepSize:2}}}, maintainAspectRatio:false}});
+
+// ---------- scoring demo ----------
+const dSel=$('demoRace');
+const demoRaces=['Australia','China','Japan','Miami','Canada','Monaco','Barcelona','Austria','Britain','Belgium','Hungary','Netherlands','Italy','Spain','Azerbaijan','Sepang'];
+demoRaces.forEach(r=>{ const o=document.createElement('option'); o.value=r; o.textContent=r+(r==='Sepang'?' (in Bahrain slot, pending)':''); dSel.appendChild(o); });
+dSel.value='Sepang';
+function renderDemo(){
+  const r=dSel.value, rows=DATA.realResults[r];
+  const tb=document.querySelector('#demoTable tbody'); tb.innerHTML='';
+  const teamTotals={}; TEAMS.forEach(t=>teamTotals[t]=0);
+  rows.forEach(([code,team,pos,fin])=>{
+    const pts = (fin&&pos!=null)?(23-pos):0;
+    teamTotals[team]+=pts;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${pos==null?'·':pos}</td><td><b>${code}</b></td>
+      <td><span class="swatch" style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${tcolor(team)};margin-right:8px;"></span>${tname(team)}</td>
+      <td style="color:${fin?'var(--good)':'var(--muted)'}">${fin?'Finished':'DNF / DNS'}</td>
+      <td class="num"><b>${pts}</b></td>`;
+    tb.appendChild(tr);
+  });
+  const sorted=TEAMS.map(t=>({t,v:teamTotals[t]})).sort((a,b)=>b.v-a.v);
+  $('demoTeams').innerHTML='<h3 style="font-size:15px;margin-bottom:10px;">Team totals: '+r+'</h3><table><thead><tr><th>Constructor</th><th class="num">Points</th></tr></thead><tbody>'+
+    sorted.map(e=>`<tr><td><span class="swatch" style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${tcolor(e.t)};margin-right:8px;"></span>${tname(e.t)}</td><td class="num"><b>${e.v}</b></td></tr>`).join('')+'</tbody></table>';
+  const note=$('demoNote'); note.style.display='none';
+  if(r==='Australia'){ note.innerHTML='<b>Audit flag:</b> the sheet records Aston Martin 0 here, but Stroll finished P17, which is 6 pts. No player picked them, so standings are unaffected.'; note.style.display='block'; }
+  if(r==='Barcelona'){ note.innerHTML='<b>Audit flag:</b> the sheet records Williams 11 here, but Albon finished P18, worth 5 more pts (16 total). No player picked them, so standings are unaffected.'; note.style.display='block'; }
+}
+dSel.addEventListener('change', renderDemo);
+renderDemo();
+
+// ---------- my pick / auth (front-end demo; stored in this browser only) ----------
+const UPCOMING = [
+  {id:'singapore', name:'Singapore Grand Prix', lockUTC:'2026-10-11T12:00:00Z'},
+  {id:'us',        name:'United States Grand Prix', lockUTC:'2026-10-25T19:00:00Z'},
+  {id:'mexico',    name:'Mexico City Grand Prix', lockUTC:'2026-11-01T20:00:00Z'},
+  {id:'brazil',    name:'São Paulo Grand Prix', lockUTC:'2026-11-08T17:00:00Z'},
+  {id:'vegas',     name:'Las Vegas Grand Prix', lockUTC:'2026-11-22T04:00:00Z'},
+  {id:'qatar',     name:'Qatar Grand Prix', lockUTC:'2026-11-29T16:00:00Z'},
+  {id:'abudhabi',  name:'Abu Dhabi Grand Prix', lockUTC:'2026-12-06T13:00:00Z'}
+];
+const sess = {
+  get(){ try{ return JSON.parse(localStorage.getItem('f1demo.session')); }catch(e){ return null; } },
+  set(v){ localStorage.setItem('f1demo.session', JSON.stringify(v)); },
+  clear(){ localStorage.removeItem('f1demo.session'); }
+};
+const pickStore = {
+  get(){ try{ return JSON.parse(localStorage.getItem('f1demo.picks'))||{}; }catch(e){ return {}; } },
+  set(race,team){ const p=this.get(); p[race]={team:team, at:new Date().toISOString()}; localStorage.setItem('f1demo.picks', JSON.stringify(p)); }
+};
+function nextRace(){ const now=Date.now(); for(const r of UPCOMING){ if(new Date(r.lockUTC).getTime()>now) return r; } return null; }
+function samplePick(pi, raceId){ let h=7; const s=pi+'|'+raceId; for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))>>>0; } return TEAMS[h%TEAMS.length]; }
+function fmtDur(ms){ const s=Math.max(0,Math.floor(ms/1000)); return Math.floor(s/86400)+'d '+Math.floor(s%86400/3600)+'h '+Math.floor(s%3600/60)+'m'; }
+function fmtLock(iso){ return new Date(iso).toLocaleString(undefined,{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); }
+let selectedTeam=null;
+
+function renderAuth(){
+  const s=sess.get(), nav=$('navAuth');
+  if(s){
+    nav.innerHTML='<span style="color:var(--muted);font-size:13px;">'+s.email+'</span> <button class="btn ghost" id="logoutBtn" style="padding:6px 12px;">Log out</button>';
+    $('logoutBtn').addEventListener('click',()=>{ sess.clear(); selectedTeam=null; renderAuth(); });
+  } else {
+    nav.innerHTML='<a class="nl" href="#my-pick">Log in</a>';
+  }
+  $('loginCard').style.display = s?'none':'block';
+  $('pickUI').style.display = s?'block':'none';
+  if(s) renderPick();
+}
+
+function renderPick(){
+  const s=sess.get(); if(!s) return;
+  const r=nextRace();
+  if(!r){
+    $('nextRaceTitle').textContent='Season complete';
+    $('lockInfo').textContent='No upcoming races with a scheduled start.';
+    $('teamGrid').innerHTML=''; $('submitPick').style.display='none'; $('pickStatus').textContent='';
+    document.querySelector('#leaguePicks tbody').innerHTML=''; return;
+  }
+  const lockMs=new Date(r.lockUTC).getTime(), locked=lockMs<=Date.now();
+  const mine=pickStore.get()[r.id];
+  if(locked) selectedTeam=null;
+  if(!selectedTeam && mine) selectedTeam=mine.team;
+  $('nextRaceTitle').textContent='Next race: '+r.name;
+  $('lockInfo').innerHTML = locked
+    ? '<b style="color:var(--warn)">Picks are locked.</b> The race has started, so submitted picks can no longer be changed.'
+    : 'Picks lock <b>'+fmtLock(r.lockUTC)+'</b>, <span id="countdown">'+fmtDur(lockMs-Date.now())+'</span> remaining. You can change your pick until then.';
+  $('teamGrid').innerHTML = TEAMS.map(t=>
+    '<button class="pickbtn '+(selectedTeam===t?'sel':'')+'" data-team="'+t+'"'+(locked?' disabled':'')+'>'+
+    '<span class="swatch" style="background:'+tcolor(t)+'"></span>'+tname(t)+'</button>').join('');
+  document.querySelectorAll('.pickbtn').forEach(b=>b.addEventListener('click',()=>{ selectedTeam=b.dataset.team; renderPick(); }));
+  $('submitPick').style.display = locked?'none':'inline-block';
+  $('pickStatus').textContent = mine
+    ? ('Your submitted pick: '+tname(mine.team)+(locked?' (locked)':'. You can still change it.'))
+    : 'No pick submitted yet.';
+  $('picksRaceName').textContent='· '+r.name;
+  $('picksNote').textContent = locked
+    ? 'Picks are locked, revealed below. (Other players\u2019 picks are simulated for this demo.)'
+    : 'Nobody can see anyone else\u2019s pick until the lock. (Other players\u2019 picks are simulated for this demo.)';
+  const tb=document.querySelector('#leaguePicks tbody'); tb.innerHTML='';
+  const you=document.createElement('tr');
+  you.style.background='rgba(232,0,45,.07)';
+  you.innerHTML='<td><b>You</b> <span style="color:var(--muted);font-size:12px;">'+s.email+'</span></td><td>'+
+    (mine ? '<span class="swatch" style="display:inline-block;width:10px;height:10px;border-radius:3px;background:'+tcolor(mine.team)+';margin-right:8px;"></span><b>'+tname(mine.team)+'</b>'
+          : '<span style="color:var(--muted)">No pick yet</span>')+'</td>';
+  tb.appendChild(you);
+  PLAYERS.forEach((p,i)=>{
+    const tr=document.createElement('tr'), pk=samplePick(i,r.id);
+    tr.innerHTML='<td>'+p+'</td><td>'+(locked
+      ? '<span class="swatch" style="display:inline-block;width:10px;height:10px;border-radius:3px;background:'+tcolor(pk)+';margin-right:8px;"></span>'+tname(pk)
+      : '<span style="color:var(--muted)">\uD83D\uDD12 Hidden until lock</span>')+'</td>';
+    tb.appendChild(tr);
+  });
+}
+
+$('loginBtn').addEventListener('click',()=>{
+  const em=$('loginEmail').value.trim();
+  if(!em || em.indexOf('@')<0){ $('loginErr').style.display='block'; return; }
+  $('loginErr').style.display='none';
+  sess.set({email:em, hasPw:$('loginPw').value.length>0, at:new Date().toISOString()});
+  selectedTeam=null; renderAuth();
+  document.getElementById('my-pick').scrollIntoView({behavior:'smooth'});
+});
+$('submitPick').addEventListener('click',()=>{
+  const r=nextRace(); if(!r || !selectedTeam) return;
+  if(new Date(r.lockUTC).getTime()<=Date.now()){ renderPick(); return; }
+  pickStore.set(r.id, selectedTeam); renderPick();
+});
+setInterval(()=>{ const el=$('countdown'), r=nextRace(); if(el&&r) el.textContent=fmtDur(new Date(r.lockUTC).getTime()-Date.now()); },30000);
+renderAuth();
+</script>
+</body>
+</html>

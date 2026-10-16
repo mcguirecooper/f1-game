@@ -1,0 +1,16 @@
+project_id = "f1-game"
+
+[api]
+enabled = true
+
+[db]
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173/"
+additional_redirect_urls = ["https://mcguirecooper.github.io/f1-game/"]
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
