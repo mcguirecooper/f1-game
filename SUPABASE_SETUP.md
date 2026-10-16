@@ -48,4 +48,17 @@ The application should not import standings or fantasy points directly. The data
 
 Players submit picks through `submit_pick`, which checks authentication, the race lock time, constructor usage, and the usage allocation rule. Admin result corrections and pick overrides go through audited security-definer functions. No client role receives direct write access to results, picks, or the audit log.
 
-The current dashboard still uses its Phase 1 local-storage prototype. Switching it to `src/services/auth.ts` and `src/services/league.ts` should happen after the first real season seed is reviewed.
+The dashboard now uses Supabase Auth when the Vite environment variables are present. The local-storage session remains as a development fallback when Supabase is not configured. Pick submission is intentionally disabled in the UI until the reviewed 2026 season seed exists, so artificial demo teams cannot be written to the production database.
+
+## GitHub Pages deployment
+
+The repository includes a GitHub Actions workflow at `.github/workflows/deploy.yml`. In the GitHub repository, add these as **repository variables** under **Settings → Secrets and variables → Actions → Variables**:
+
+```text
+VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your_publishable_key
+```
+
+Do not add the Supabase CLI deploy token or a secret/service-role key to the frontend variables. The workflow only needs the public URL and publishable key to build the browser app.
+
+Under **Settings → Pages**, set **Build and deployment → Source** to **GitHub Actions**. Pushing to `main` will then run tests, build the app, and deploy it at `https://mcguirecooper.github.io/f1-game/`.
