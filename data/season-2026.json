@@ -191,6 +191,10 @@
     {
       "code": "BOT",
       "name": "Valtteri Bottas"
+    },
+    {
+      "code": "TSU",
+      "name": "Yuki Tsunoda"
     }
   ],
   "races": [
@@ -1604,13 +1608,8 @@
     },
     {
       "raceKey": "netherlands",
-      "driverCode": "HAD",
-      "constructorKey": "red-bull"
-    },
-    {
-      "raceKey": "netherlands",
       "driverCode": "LAW",
-      "constructorKey": "racing-bulls"
+      "constructorKey": "red-bull"
     },
     {
       "raceKey": "netherlands",
@@ -1676,6 +1675,11 @@
       "raceKey": "netherlands",
       "driverCode": "BOT",
       "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "netherlands",
+      "driverCode": "TSU",
+      "constructorKey": "racing-bulls"
     },
     {
       "raceKey": "italy",
@@ -1714,13 +1718,8 @@
     },
     {
       "raceKey": "italy",
-      "driverCode": "HAD",
-      "constructorKey": "red-bull"
-    },
-    {
-      "raceKey": "italy",
       "driverCode": "LAW",
-      "constructorKey": "racing-bulls"
+      "constructorKey": "red-bull"
     },
     {
       "raceKey": "italy",
@@ -1786,6 +1785,11 @@
       "raceKey": "italy",
       "driverCode": "BOT",
       "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "italy",
+      "driverCode": "TSU",
+      "constructorKey": "racing-bulls"
     },
     {
       "raceKey": "spain",
@@ -1824,13 +1828,8 @@
     },
     {
       "raceKey": "spain",
-      "driverCode": "HAD",
-      "constructorKey": "red-bull"
-    },
-    {
-      "raceKey": "spain",
       "driverCode": "LAW",
-      "constructorKey": "racing-bulls"
+      "constructorKey": "red-bull"
     },
     {
       "raceKey": "spain",
@@ -1896,6 +1895,11 @@
       "raceKey": "spain",
       "driverCode": "BOT",
       "constructorKey": "cadillac"
+    },
+    {
+      "raceKey": "spain",
+      "driverCode": "TSU",
+      "constructorKey": "racing-bulls"
     },
     {
       "raceKey": "azerbaijan",

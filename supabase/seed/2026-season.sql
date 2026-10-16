@@ -69,7 +69,8 @@ values
   ('Fernando Alonso', 'ALO'),
   ('Lance Stroll', 'STR'),
   ('Sergio Perez', 'PER'),
-  ('Valtteri Bottas', 'BOT')
+  ('Valtteri Bottas', 'BOT'),
+  ('Yuki Tsunoda', 'TSU')
 on conflict (code) do update set name = excluded.name;
 
 insert into public.races(season_id, name, round_number, starts_at, status)
@@ -409,8 +410,7 @@ from (values
   ('netherlands', 'NOR', 'mclaren'),
   ('netherlands', 'PIA', 'mclaren'),
   ('netherlands', 'VER', 'red-bull'),
-  ('netherlands', 'HAD', 'red-bull'),
-  ('netherlands', 'LAW', 'racing-bulls'),
+  ('netherlands', 'LAW', 'red-bull'),
   ('netherlands', 'LIN', 'racing-bulls'),
   ('netherlands', 'GAS', 'alpine'),
   ('netherlands', 'COL', 'alpine'),
@@ -424,6 +424,7 @@ from (values
   ('netherlands', 'STR', 'aston-martin'),
   ('netherlands', 'PER', 'cadillac'),
   ('netherlands', 'BOT', 'cadillac'),
+  ('netherlands', 'TSU', 'racing-bulls'),
   ('italy', 'RUS', 'mercedes'),
   ('italy', 'ANT', 'mercedes'),
   ('italy', 'LEC', 'ferrari'),
@@ -431,8 +432,7 @@ from (values
   ('italy', 'NOR', 'mclaren'),
   ('italy', 'PIA', 'mclaren'),
   ('italy', 'VER', 'red-bull'),
-  ('italy', 'HAD', 'red-bull'),
-  ('italy', 'LAW', 'racing-bulls'),
+  ('italy', 'LAW', 'red-bull'),
   ('italy', 'LIN', 'racing-bulls'),
   ('italy', 'GAS', 'alpine'),
   ('italy', 'COL', 'alpine'),
@@ -446,6 +446,7 @@ from (values
   ('italy', 'STR', 'aston-martin'),
   ('italy', 'PER', 'cadillac'),
   ('italy', 'BOT', 'cadillac'),
+  ('italy', 'TSU', 'racing-bulls'),
   ('spain', 'RUS', 'mercedes'),
   ('spain', 'ANT', 'mercedes'),
   ('spain', 'LEC', 'ferrari'),
@@ -453,8 +454,7 @@ from (values
   ('spain', 'NOR', 'mclaren'),
   ('spain', 'PIA', 'mclaren'),
   ('spain', 'VER', 'red-bull'),
-  ('spain', 'HAD', 'red-bull'),
-  ('spain', 'LAW', 'racing-bulls'),
+  ('spain', 'LAW', 'red-bull'),
   ('spain', 'LIN', 'racing-bulls'),
   ('spain', 'GAS', 'alpine'),
   ('spain', 'COL', 'alpine'),
@@ -468,6 +468,7 @@ from (values
   ('spain', 'STR', 'aston-martin'),
   ('spain', 'PER', 'cadillac'),
   ('spain', 'BOT', 'cadillac'),
+  ('spain', 'TSU', 'racing-bulls'),
   ('azerbaijan', 'RUS', 'mercedes'),
   ('azerbaijan', 'ANT', 'mercedes'),
   ('azerbaijan', 'LEC', 'ferrari'),
@@ -671,5 +672,7 @@ join _f1_import_races r on r.import_key = source.race_key
 join _f1_import_drivers d on d.driver_code = source.driver_code
 join _f1_import_constructors c on c.import_key = source.constructor_key
 on conflict (race_id, driver_id) do update set constructor_id = excluded.constructor_id;
+
+
 
 commit;

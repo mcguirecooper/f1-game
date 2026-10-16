@@ -31,3 +31,12 @@ npx supabase db query --linked --file supabase/seed/2026-season.sql
 ```
 
 This loader is idempotent for season metadata, constructors, drivers, races, and constructor assignments. It does not create results, picks, profiles, or scores. Do not run the apply command until the generated SQL has been reviewed.
+
+Fetch the completed result classifications from the official Formula 1 result pages with:
+
+```sh
+npm run fetch:season:results -- --output data/season-2026-results.json
+npm run validate:season -- data/season-2026-results.json
+```
+
+This creates a reviewed-input candidate only; it does not write to Supabase.

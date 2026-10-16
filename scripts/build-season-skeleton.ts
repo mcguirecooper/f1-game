@@ -36,6 +36,7 @@ const drivers = [
   ['SAI', 'Carlos Sainz', 'williams'], ['ALB', 'Alexander Albon', 'williams'],
   ['ALO', 'Fernando Alonso', 'aston-martin'], ['STR', 'Lance Stroll', 'aston-martin'],
   ['PER', 'Sergio Perez', 'cadillac'], ['BOT', 'Valtteri Bottas', 'cadillac'],
+  ['TSU', 'Yuki Tsunoda', 'racing-bulls'],
 ] as const;
 
 // Race timestamps are the official race start times converted from the official
@@ -88,7 +89,16 @@ const season: SeasonImport = {
   constructors: constructors.map(([key, name, color]) => ({ key, name, color })),
   drivers: drivers.map(([code, name]) => ({ code, name })),
   races: races.map(([key, roundNumber, name, startsAt]) => ({ key, roundNumber, name, startsAt, status: 'scheduled' as const })),
-  assignments: races.flatMap(([raceKey]) => drivers.map(([driverCode, , constructorKey]) => ({ raceKey, driverCode, constructorKey }))),
+  assignments: races.flatMap(([raceKey]) => drivers
+    .filter(([driverCode]) => !(raceKey === 'netherlands' || raceKey === 'italy' || raceKey === 'spain') || driverCode !== 'HAD')
+    .filter(([driverCode]) => driverCode !== 'TSU' || raceKey === 'netherlands' || raceKey === 'italy' || raceKey === 'spain')
+    .map(([driverCode, , constructorKey]) => ({
+      raceKey,
+      driverCode,
+      constructorKey: driverCode === 'LAW' && (raceKey === 'netherlands' || raceKey === 'italy' || raceKey === 'spain')
+        ? 'red-bull'
+        : constructorKey,
+    }))),
   results: [],
 };
 

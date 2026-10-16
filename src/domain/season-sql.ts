@@ -9,6 +9,7 @@ export function buildSeasonSql(input: SeasonImport): string {
   const constructorMappingValues = input.constructors.map((item) => `(${sql(item.key)}, ${sql(item.name)}, ${sql(item.color)})`).join(',\n  ');
   const raceValues = input.races.map((item) => `(${sql(item.key)}, ${item.roundNumber}, ${sql(item.name)}, ${sql(item.startsAt)}, ${sql(item.status)})`).join(',\n  ');
   const assignmentValues = input.assignments.map((item) => `(${sql(item.raceKey)}, ${sql(item.driverCode)}, ${sql(item.constructorKey)})`).join(',\n  ');
+  const resultValues = input.results.map((item) => `(${sql(item.raceKey)}, ${sql(item.driverCode)}, ${item.finishingPosition === null ? 'null' : item.finishingPosition}, ${sql(item.status)})`).join(',\n  ');
 
   return `-- Generated from a validated SeasonImport file.
 -- This seed contains season metadata, roster, schedule, and assignments only.
@@ -84,6 +85,11 @@ from (values
 join public.races r on r.round_number = source.round_number
 join public.seasons s on s.id = r.season_id and s.year = ${input.season.year};
 
+-- Reconcile race-specific assignments so a roster correction removes obsolete
+-- assignments from an earlier seed before inserting the current source snapshot.
+delete from public.constructor_assignments
+where race_id in (select race_id from _f1_import_races);
+
 insert into public.constructor_assignments(race_id, driver_id, constructor_id)
 select r.race_id, d.driver_id, c.constructor_id
 from (values
@@ -93,6 +99,24 @@ join _f1_import_races r on r.import_key = source.race_key
 join _f1_import_drivers d on d.driver_code = source.driver_code
 join _f1_import_constructors c on c.import_key = source.constructor_key
 on conflict (race_id, driver_id) do update set constructor_id = excluded.constructor_id;
+
+${input.results.length > 0 ? `insert into public.driver_results(race_id, driver_id, finishing_position, status)
+select r.race_id, d.driver_id, source.finishing_position, source.status
+from (values
+  ${resultValues}
+) as source(race_key, driver_code, finishing_position, status)
+join _f1_import_races r on r.import_key = source.race_key
+join _f1_import_drivers d on d.driver_code = source.driver_code
+on conflict (race_id, driver_id) do update set
+  finishing_position = excluded.finishing_position,
+  status = excluded.status,
+  updated_at = now();
+
+update public.races
+set status = 'completed'
+where season_id = (select id from public.seasons where year = ${input.season.year})
+  and id in (select distinct race_id from public.driver_results where race_id in (select race_id from _f1_import_races));
+` : ''}
 
 commit;
 `;
