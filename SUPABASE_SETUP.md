@@ -10,6 +10,15 @@ The migration in `supabase/migrations/20261016000000_initial_schema.sql` is inte
 4. Enable email authentication, disable public signup, and use invitations for the league members.
 5. Copy `.env.example` to `.env.local` and fill in the project URL and publishable key.
 
+In **Authentication → URL Configuration**, set the Site URL to the local URL during development and add both of these redirect URLs:
+
+```text
+http://localhost:5173/
+https://mcguirecooper.github.io/f1-game/
+```
+
+In **Authentication → Providers → Email**, keep email enabled. The frontend now requests magic links through `signInWithOtp`; because public signup is disabled, only invited users can complete the flow.
+
 Then, after installing the Supabase CLI:
 
 ```sh
