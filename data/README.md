@@ -17,3 +17,17 @@ The checked-in `season-2026.json` is a draft schedule/roster skeleton generated 
 ```sh
 npm run build:season:skeleton
 ```
+
+Generate the reviewable Supabase seed SQL:
+
+```sh
+npm run generate:season:sql -- data/season-2026.json --output supabase/seed/2026-season.sql
+```
+
+After reviewing the generated SQL, apply it to the linked project with the Supabase CLI:
+
+```sh
+npx supabase db query --linked --file supabase/seed/2026-season.sql
+```
+
+This loader is idempotent for season metadata, constructors, drivers, races, and constructor assignments. It does not create results, picks, profiles, or scores. Do not run the apply command until the generated SQL has been reviewed.
