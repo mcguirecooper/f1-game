@@ -3,7 +3,11 @@ import { validateSeasonImport } from './season-import';
 import type { SeasonImport } from './season-import';
 
 const validImport: SeasonImport = {
-  source: { provider: 'reviewed-source', retrievedAt: '2026-01-01T00:00:00Z' },
+  source: {
+    provider: 'reviewed-source',
+    retrievedAt: '2026-01-01T00:00:00Z',
+    references: [{ kind: 'calendar', url: 'https://example.com/calendar', retrievedAt: '2026-01-01T00:00:00Z' }],
+  },
   season: {
     year: 2026,
     status: 'draft',

@@ -10,4 +10,4 @@ npm run validate:season -- data/season-2026.json
 
 The validator is dry-run only. It checks UTC timestamps, unique keys, race and driver references, constructor assignments, result statuses, and duplicate finishing positions. It makes no Supabase writes.
 
-The `source` block must identify the provider and retrieval timestamp so the league has a reproducible audit trail for the season seed.
+The `source` block must identify the provider, retrieval timestamp, and at least one URL reference so the league has a reproducible audit trail for the season seed.

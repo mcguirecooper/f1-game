@@ -7,6 +7,11 @@ export interface SeasonImport {
     provider: string;
     retrievedAt: string;
     notes?: string;
+    references: Array<{
+      kind: 'calendar' | 'entry_list' | 'results' | 'regulations';
+      url: string;
+      retrievedAt: string;
+    }>;
   };
   season: {
     year: number;
@@ -89,6 +94,19 @@ export function validateSeasonImport(input: SeasonImport): SeasonImportValidatio
 
   if (!input?.source?.provider?.trim()) errors.push('source.provider is required');
   if (!isValidDate(input?.source?.retrievedAt ?? '')) errors.push('source.retrievedAt must be an ISO UTC timestamp');
+  if (!Array.isArray(input?.source?.references) || input.source.references.length === 0) {
+    errors.push('source.references must contain at least one source URL');
+  } else {
+    input.source.references.forEach((reference, index) => {
+      if (!['calendar', 'entry_list', 'results', 'regulations'].includes(reference.kind)) errors.push(`source.references[${index}].kind is invalid`);
+      try {
+        new URL(reference.url);
+      } catch {
+        errors.push(`source.references[${index}].url must be an absolute URL`);
+      }
+      if (!isValidDate(reference.retrievedAt)) errors.push(`source.references[${index}].retrievedAt must be an ISO UTC timestamp`);
+    });
+  }
   if (!Number.isInteger(input?.season?.year) || input.season.year < 1950 || input.season.year > 2200) {
     errors.push('season.year must be an integer from 1950 through 2200');
   }
