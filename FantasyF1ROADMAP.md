@@ -1,5 +1,70 @@
 # F1 Game 2026 — GitHub Pages + Supabase Setup
 
+> **Implementation handoff — updated 2026-10-16**
+>
+> This section records the current state for the next agent. The original roadmap below remains the product plan; completed items are marked here rather than rewritten.
+>
+> ## Completed
+>
+> - Created and pushed the `mcguirecooper/f1-game` repository.
+> - Built the Vite + TypeScript dashboard using ECharts, AG Grid, Tailwind, and the original artificial demo dataset.
+> - Added Vitest scoring tests and the database-authoritative scoring views/functions.
+> - Created the Supabase schema, RLS policies, pick-lock/usage RPC, admin correction RPCs, and generated typed client definitions.
+> - Added Supabase magic-link authentication with local prototype fallback.
+> - Added GitHub Pages deployment through `.github/workflows/deploy.yml`; the workflow uses Node 24-compatible action versions.
+> - Selected free first-party data sources and documented them in `data/2026-data-sources.md`.
+> - Added a typed `SeasonImport` contract and dry-run validation command:
+>   `npm run validate:season -- path/to/season.json`
+> - Added the official 2026 schedule/roster skeleton and reviewed completed-race result snapshot.
+> - Added reproducible source/import scripts:
+>   - `npm run build:season:skeleton`
+>   - `npm run fetch:season:results`
+>   - `npm run generate:season:sql`
+> - Loaded the 2026 structural data and completed results into Supabase.
+> - Connected authenticated leaderboard loading and real pick submission to Supabase.
+>
+> ## Current Supabase state
+>
+> The linked project is `jrrqnoeqecxcxhxzkkzr`. The latest verified counts are:
+>
+> - 1 season
+> - 23 races: 17 completed, 6 scheduled
+> - 23 drivers
+> - 11 constructors
+> - 506 race-specific assignments
+> - 374 driver result rows
+> - 0 profiles/picks
+>
+> The season and results seeds are reviewable at `supabase/seed/2026-season-with-results.sql`. The seed is idempotent and does not create users, profiles, picks, or fantasy scores.
+>
+> ## Current commits
+>
+> - `0277ad3` — live Supabase dashboard and authenticated pick submission
+> - `137e917` — official 2026 result import and corrected seed
+> - `1909e57` — controlled season SQL loader
+> - `0d6e2ed` — official 2026 season skeleton
+>
+> ## Next implementation tasks
+>
+> 1. Provision invited league members by creating `profiles` rows and assigning the administrator role where appropriate.
+> 2. Replace the remaining demo-only charts and player/constructor analysis with live queries from `standings`, `player_race_scores`, `constructor_race_scores`, `races`, and `driver_results`.
+> 3. Add a small authenticated pick-history query so the player can see their submitted picks and usage counts.
+> 4. Build the admin experience described in Phase 3: race status/schedule, result editing through `admin_update_result`, pick overrides through `admin_override_pick`, and audit history.
+> 5. Add Playwright coverage for magic-link/session handling, pick submission, lock behavior, and admin permissions.
+> 6. Add a repeatable results refresh/review process after each completed 2026 race; final FIA classifications should be used to reconcile the Formula 1 result snapshot where needed.
+>
+> ## Important handoff notes
+>
+> - Do not load artificial demo data into Supabase. `src/data.ts` is still intentionally artificial and is only a local fallback.
+> - The browser app must only receive `VITE_SUPABASE_URL` and the publishable key. Never put a service-role key or Supabase CLI token in frontend variables.
+> - The local Node installation used during development is at `/private/tmp/f1-node`; a new shell may need `export PATH="/private/tmp/f1-node/bin:$PATH"` before using `npm` or `npx`.
+> - The live dashboard currently switches the leaderboard and pick flow to Supabase after authentication; the remaining analytics charts still use the demo data and should be migrated next.
+> - GitHub Pages deployment requires repository variables in `mcguirecooper/f1-game` and Pages → Source = GitHub Actions.
+>
+> ## Verification
+>
+> `npm test -- --run` passes with 6 tests. `npm run build` passes with the expected Vite large-chunk warning. Browser QA has not yet been run in this environment.
+
 Recommended production stack
 
 We'll use a separate GitHub repository for your F1 fantasy league, keeping your personal website untouched.
