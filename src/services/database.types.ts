@@ -504,6 +504,26 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      admin_provision_profile: {
+        Args: {
+          p_display_name: string
+          p_reason: string
+          p_role: string
+          p_user_id: string
+        }
+        Returns: {
+          created_at: string
+          display_name: string
+          id: string
+          role: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "profiles"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       admin_update_result: {
         Args: {
           p_driver_id: number
