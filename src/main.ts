@@ -22,6 +22,17 @@ const teamMeta: Record<Team, { name:string; color:string }> = {
 const playerColors = ['#E8002D','#FF8000','#FFD12E','#27F4D2','#3671C6','#6692FF','#B38AFF','#FF87BC','#229971','#64C4FF','#B6BABD','#E8E8E8','#D4AF37'];
 const playerColor = Object.fromEntries(players.map((p, i) => [p, playerColors[i % playerColors.length]]));
 const value = (v: number | null) => v ?? 0;
+const seasonRaceCount = 23;
+const demoCompletedRaceweeks = DATA.races.length;
+function raceProgress(races: Array<{ round_number: number; status: string }>) {
+  const completed = races.filter((race) => race.status === 'completed').sort((a, b) => a.round_number - b.round_number);
+  const next = races.find((race) => race.status === 'scheduled');
+  return {
+    completedCount: completed.length,
+    currentRaceweek: next?.round_number ?? completed.at(-1)?.round_number ?? completed.length,
+    total: races.length,
+  };
+}
 const total = Object.fromEntries(players.map(p => [p, DATA.playerRace[p].reduce<number>((sum, score) => sum + value(score), 0)])) as Record<Player, number>;
 const order = [...players].sort((a,b) => total[b] - total[a]);
 const cumulative = Object.fromEntries(players.map(p => { let running = 0; const scores = DATA.playerRace[p].map(score => { running += value(score); return running; }); return [p, scores]; })) as Record<Player, number[]>;
@@ -40,7 +51,7 @@ document.querySelector('#app')!.innerHTML = `
       <div class="chips"><span class="chip" id="data-mode" role="status" aria-live="polite"><i class="dot" style="background:var(--warn)"></i>Demo preview · sign in for live data</span><span class="chip"><i class="dot" style="background:var(--good)"></i>17 races scored</span><span class="chip"><i class="dot" style="background:#6692FF"></i>23-race season</span></div>
     </div>
     <section id="race-week" class="race-command" aria-labelledby="race-week-title"><div><h2 id="race-week-title">Your next race decision</h2><p class="sub" id="race-week-copy">Choose one constructor before the lock. Your pick stays private until the race starts.</p><div class="race-command-meta"><span class="status-badge scheduled" id="race-week-status">Next race</span><span id="race-week-lock">Picks lock October 25, 2026 at 1:00 PM.</span></div></div><div class="race-command-action"><h3 id="race-command-title">United States Grand Prix</h3><a class="btn" href="#my-pick" id="race-command-cta">Sign in to make your pick</a></div></section>
-    <section id="leaderboard"><h2>Leaderboard</h2><p class="sub" id="leaderboard-sub">Demo standings from the original prototype dataset.</p><div class="card"><div id="leaderboard-grid" style="height:465px;width:100%"></div></div></section>
+    <section id="leaderboard"><h2>Leaderboard</h2><p class="sub" id="leaderboard-sub">Demo standings through raceweek ${demoCompletedRaceweeks} of ${seasonRaceCount}; missed counts only include completed raceweeks.</p><div class="card"><div id="leaderboard-grid" style="height:465px;width:100%"></div></div></section>
     <section id="title-race"><h2>The title race</h2><p class="sub">Cumulative points across the scored races. Select a line in the legend to focus on a player.</p><div class="card"><div id="cumulative-chart" class="chart tall" role="img" aria-label="Line chart showing cumulative league points by player across completed races"></div></div></section>
     <section id="player"><h2>Player deep dive</h2><p class="sub">Per-race scoring, championship rank, and constructor usage against the 9×2 + 2×3 rule.</p><label class="sr-only" for="player-select">Player to inspect</label><select class="control" id="player-select"></select><div class="statgrid" id="player-stats"></div><div class="grid2"><div class="card"><h3>Points per race</h3><div id="player-race-chart" class="chart" role="img" aria-label="Bar chart showing the selected player's points per race"></div></div><div class="card"><h3>Championship rank per race</h3><div id="player-rank-chart" class="chart" role="img" aria-label="Line chart showing the selected player's championship rank per race"></div></div></div><div class="card" style="margin-top:20px"><h3>Constructor usage</h3><div id="usage-list"></div></div></section>
     <section id="constructors"><h2>Constructors</h2><p class="sub">Compare team strength and see how the league has distributed its picks.</p><div class="grid2"><div class="card"><h3>Season average points per race</h3><div id="avg-chart" class="chart" role="img" aria-label="Bar chart comparing average points per race by constructor"></div></div><div class="card"><h3>Team points by race</h3><label class="sr-only" for="race-select">Race to inspect</label><select class="control" id="race-select"></select><div id="race-team-chart" class="chart" role="img" aria-label="Bar chart comparing constructor points for the selected race"></div></div></div><div class="card" style="margin-top:20px"><h3>Picks per race</h3><div id="picks-chart" class="chart tall" role="img" aria-label="Stacked bar chart showing constructor picks by race"></div><p class="muted">Stacked counts of how many players picked each constructor each race.</p></div></section>
@@ -80,19 +91,21 @@ let liveLeague: LiveLeagueData | null = null;
 let activeLiveRaceId: number | null = null;
 let selectedConstructorId: number | null = null;
 function renderLiveLeaderboard(data: LiveLeagueData) {
+  const progress = raceProgress(data.races);
+  const completedRaceIds = new Set(data.races.filter((race) => race.status === 'completed').map((race) => race.id));
   const liveRows = data.standings.map((standing, index) => ({
     rank: index + 1,
     player: standing.display_name ?? 'Unnamed player',
     points: standing.points ?? 0,
     behind: index ? (standing.points ?? 0) - (data.standings[0]?.points ?? 0) : 0,
-    average: data.races.length ? ((standing.points ?? 0) / data.races.length).toFixed(1) : '0.0',
-    missed: Math.max(0, data.races.length - (standing.picks_submitted ?? 0)),
+    average: progress.completedCount ? ((standing.points ?? 0) / progress.completedCount).toFixed(1) : '0.0',
+    missed: Math.max(0, progress.completedCount - new Set(data.playerRaceScores.filter((score) => score.player_id === standing.player_id && completedRaceIds.has(score.race_id!)).map((score) => score.race_id)).size),
   }));
   leaderboardGrid.setGridOption('rowData', liveRows);
   if (liveRows.length === 0) leaderboardGrid.showNoRowsOverlay();
   $('leaderboard-sub').textContent = liveRows.length
-    ? `Live Supabase standings across ${data.races.filter((race) => race.status === 'completed').length} completed races.`
-    : 'The season is loaded. League member profiles will appear here after they are invited and added.';
+    ? `Live standings · raceweek ${progress.currentRaceweek} of ${progress.total} · ${progress.completedCount} completed. Missed counts only include completed raceweeks.`
+    : `Raceweek ${progress.currentRaceweek} of ${progress.total}. The season is loaded; league member profiles will appear here after they are invited and added.`;
   setDataMode('live');
 }
 
