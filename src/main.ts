@@ -179,7 +179,7 @@ function renderLiveAnalytics(data: LiveLeagueData) {
     constructor,
     average: scoredRaces.length ? scoredRaces.reduce((sum, race) => sum + scoreFor(race.id, constructor.id), 0) / scoredRaces.length : 0,
   })).sort((a, b) => b.average - a.average);
-  chart('avg-chart', { tooltip:{ trigger:'axis' }, grid:constructorGrid, xAxis:{ type:'value', ...axis }, yAxis:{ type:'category', data:liveConstructorRows.map((row) => row.constructor.name), axisLabel:{ color:'#8f99ad' } }, series:[{ type:'bar', data:liveConstructorRows.map((row) => ({ value:row.average, itemStyle:{ color:row.constructor.color } })), barMaxWidth:16 }] });
+  chart('avg-chart', { tooltip:{ trigger:'axis', axisPointer:{ type:'shadow' } }, grid:constructorGrid, xAxis:{ type:'value', ...axis }, yAxis:{ type:'category', data:liveConstructorRows.map((row) => row.constructor.name), axisLabel:{ color:'#8f99ad' } }, series:[{ type:'bar', data:liveConstructorRows.map((row) => ({ value:row.average, itemStyle:{ color:row.constructor.color } })), barMaxWidth:16 }] });
   $('constructors').querySelector('.sub')!.textContent = 'Live constructor strength and pick distribution from the published season data.';
 
   const renderLiveRaceTeams = () => {
@@ -245,7 +245,7 @@ function renderPlayer(player = playerSelect.value as Player) {
 }
 playerSelect.addEventListener('change', () => renderPlayer()); renderPlayer();
 
-chart('avg-chart', { tooltip:{ trigger:'axis' }, grid:constructorGrid, xAxis:{ type:'value', ...axis }, yAxis:{ type:'category', data:teams.map(t => teamMeta[t].name), axisLabel:{ color:'#8f99ad' } }, series:[{ type:'bar', data:teams.map(t => ({ value:DATA.teamRace[t].reduce((a,b) => a+value(b),0)/races.length, itemStyle:{ color:teamMeta[t].color } })), barMaxWidth:16 }] });
+chart('avg-chart', { tooltip:{ trigger:'axis', axisPointer:{ type:'shadow' } }, grid:constructorGrid, xAxis:{ type:'value', ...axis }, yAxis:{ type:'category', data:teams.map(t => teamMeta[t].name), axisLabel:{ color:'#8f99ad' } }, series:[{ type:'bar', data:teams.map(t => ({ value:DATA.teamRace[t].reduce((a,b) => a+value(b),0)/races.length, itemStyle:{ color:teamMeta[t].color } })), barMaxWidth:16 }] });
 const raceSelect = $('race-select') as HTMLSelectElement; raceSelect.innerHTML = races.map(r => `<option>${esc(r)}</option>`).join('');
 let raceTeamChart: echarts.ECharts; function renderRaceTeams() { raceTeamChart?.dispose(); const race = raceSelect.value; const rows = teams.map(team => ({ team, score:value(DATA.teamRace[team][races.indexOf(race)]) })).sort((a,b) => b.score-a.score); raceTeamChart = chart('race-team-chart', { tooltip:{ trigger:'axis', axisPointer:{ type:'shadow' } }, grid:constructorGrid, xAxis:{ type:'value', max:45, ...axis }, yAxis:{ type:'category', data:rows.map(r => teamMeta[r.team].name), axisLabel:{ color:'#8f99ad' } }, series:[{ type:'bar', data:rows.map(r => ({ value:r.score, itemStyle:{ color:teamMeta[r.team].color } })), barMaxWidth:16 }] }); } raceSelect.addEventListener('change', renderRaceTeams); renderRaceTeams();
 chart('picks-chart', { tooltip:{ trigger:'axis' }, legend:{ type:'scroll', bottom:6, height:24, textStyle:{ color:'#8f99ad' } }, grid:{ ...raceGrid, left:38, right:15 }, xAxis:{ type:'category', data:races, axisLabel:raceAxisLabel }, yAxis:{ type:'value', max:13, ...axis }, series:teams.map(team => ({ name:teamMeta[team].name, type:'bar', stack:'picks', itemStyle:{ color:teamMeta[team].color }, data:DATA.picks[team] })) });
