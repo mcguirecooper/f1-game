@@ -253,6 +253,41 @@ demoRace.addEventListener('change', renderDemo); renderDemo();
 
 let adminData: LiveLeagueData | null = null;
 let isAdmin = false;
+type ResultImportRun = {
+  id: string;
+  provider: string;
+  retrieved_at: string;
+  status: string;
+  created_at: string;
+  payload: {
+    source?: { references?: Array<{ url: string; kind: string }> };
+    races?: Array<{ key: string; roundNumber: number; name: string }>;
+    results?: Array<{ raceKey: string; driverCode: string; finishingPosition: number | null; status: string }>;
+  };
+};
+function renderResultImport(run: ResultImportRun) {
+  const races = new Map((run.payload.races ?? []).map((race) => [race.key, race]));
+  const rows = (run.payload.results ?? []).map((result) => ({ result, race: races.get(result.raceKey) }));
+  const sources = (run.payload.source?.references ?? []).filter((reference) => reference.kind === 'results');
+  return `<details class="import-review" ${run.status === 'review_required' ? 'open' : ''}><summary><span><b>${esc(run.status)}</b> · ${esc(run.provider)} · ${new Date(run.retrieved_at).toLocaleString()}</span><span class="muted">${rows.length} result rows</span></summary><div class="import-review-content"><div class="muted">Sources: ${sources.length ? sources.map((source) => `<a href="${esc(source.url)}" target="_blank" rel="noreferrer">Official results ↗</a>`).join(' · ') : 'No result source links recorded.'}</div><div class="table-scroll import-results-table"><table><thead><tr><th>Round</th><th>Race</th><th>Driver</th><th>Position</th><th>Status</th></tr></thead><tbody>${rows.map(({ result, race }) => `<tr><td>${race?.roundNumber ?? '—'}</td><td>${esc(race?.name ?? result.raceKey)}</td><td><b>${esc(result.driverCode)}</b></td><td class="num">${result.finishingPosition ?? '—'}</td><td><span class="status-badge ${result.status === 'finished' ? 'completed' : 'cancelled'}">${esc(result.status)}</span></td></tr>`).join('')}</tbody></table></div>${run.status === 'review_required' ? '<div class="import-actions"><label>Review reason<input class="inp wide import-reason" placeholder="Reviewed against official classification"></label><button class="btn import-publish">Publish candidate</button></div>' : ''}</div></details>`;
+}
+function renderWeeklyPickLocks(data: LiveLeagueData, adminGrid: Element) {
+  let lockCard = document.querySelector<HTMLElement>('#admin-pick-locks-card');
+  if (!lockCard) {
+    lockCard = document.createElement('div');
+    lockCard.id = 'admin-pick-locks-card';
+    lockCard.className = 'card';
+    adminGrid.prepend(lockCard);
+  }
+  const race = [...data.races].filter((item) => item.status === 'scheduled').sort((a, b) => a.round_number - b.round_number)[0];
+  if (!race) {
+    lockCard.innerHTML = '<h3>This week’s pick locks</h3><p class="muted">There are no scheduled races remaining in this season.</p>';
+    return;
+  }
+  const pickedPlayerIds = new Set(data.playerRaceScores.filter((pick) => pick.race_id === race.id).map((pick) => pick.player_id));
+  const players = data.profiles.filter((profile) => profile.role === 'player' || profile.role === 'admin');
+  lockCard.innerHTML = `<h3>This week’s pick locks</h3><p class="muted">${race.round_number}. ${esc(race.name)} · Picks lock ${formatUSRaceTimesHtml(race.starts_at)}</p><div class="pick-lock-list">${players.length ? players.map((player) => { const locked = pickedPlayerIds.has(player.id); return `<div class="pick-lock-row"><span>${esc(player.display_name)}${player.role === 'admin' ? ' <span class="muted">(admin)</span>' : ''}</span><span class="status-badge ${locked ? 'completed' : 'scheduled'}">${locked ? 'Pick locked' : 'No pick'}</span></div>`; }).join('') : '<span class="muted">No league players provisioned yet.</span>'}</div>`;
+}
 function renderAdminPanel(data: LiveLeagueData) {
   adminData = data;
   isAdmin = data.profiles.some((profile) => profile.id === currentUserId && profile.role === 'admin');
@@ -260,6 +295,7 @@ function renderAdminPanel(data: LiveLeagueData) {
   panel.style.display = isAdmin ? 'block' : 'none';
   if (!isAdmin) return;
   const adminGrid = panel.querySelector('.admin-grid')!;
+  renderWeeklyPickLocks(data, adminGrid);
   let importCard = document.querySelector<HTMLElement>('#admin-import-card');
   if (!importCard) {
     importCard = document.createElement('div');
@@ -270,8 +306,8 @@ function renderAdminPanel(data: LiveLeagueData) {
   }
   const importList = importCard.querySelector<HTMLElement>('#admin-import-list')!;
   importList.innerHTML = '<span class="muted">Loading candidates…</span>';
-  void loadResultImportRuns().then((runs: Array<{ id: string; provider: string; retrieved_at: string; status: string; created_at: string; payload: { results?: unknown[] } }>) => {
-    importList.innerHTML = runs.length ? runs.map((run) => `<div class="card"><div><b>${esc(run.status)}</b> · ${esc(run.provider)} · ${new Date(run.retrieved_at).toLocaleString()}</div><div class="muted">${run.payload?.results?.length ?? 0} result rows</div>${run.status === 'review_required' ? '<label>Reason<input class="inp wide import-reason" placeholder="Reviewed against official classification"></label><button class="btn import-publish">Publish candidate</button>' : ''}</div>`).join('') : '<span class="muted">No automated candidates yet.</span>';
+  void loadResultImportRuns().then((runs: ResultImportRun[]) => {
+    importList.innerHTML = runs.length ? runs.map(renderResultImport).join('') : '<span class="muted">No automated candidates yet.</span>';
     importList.querySelectorAll<HTMLButtonElement>('.import-publish').forEach((button, index) => {
       button.onclick = async () => {
         const run = runs.filter((item) => item.status === 'review_required')[index];

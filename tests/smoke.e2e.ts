@@ -38,6 +38,7 @@ test.describe('Authenticated dashboard', () => {
     await page.goto('/#admin-panel');
     await expect(page.getByRole('heading', { name: 'Admin control room' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'League members' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'This week’s pick locks' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Automated result candidates' })).toBeVisible();
     await expect(page.getByText(/hourly importer queues official results/i)).toBeVisible();
   });
