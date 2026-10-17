@@ -61,6 +61,10 @@ function formatUSRaceTimesHtml(value: string) {
 }
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const esc = (text: string) => text.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]!));
+const errorMessage = (error: unknown, fallback: string) => {
+  if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') return error.message;
+  return fallback;
+};
 
 document.querySelector('#app')!.innerHTML = `
   <header class="top"><nav class="nav"><span class="brand"><span class="mark"></span>F1 GAME 2026</span>
@@ -315,7 +319,7 @@ function renderAdminPanel(data: LiveLeagueData) {
         if (!reason) { button.parentElement?.insertAdjacentHTML('beforeend', '<span class="feedback">Enter a review reason first.</span>'); return; }
         button.disabled = true;
         try { await adminPublishResultImport(run.id, reason); await loadLiveDashboard(); }
-        catch (error) { button.disabled = false; button.insertAdjacentHTML('afterend', `<span class="feedback">${esc(error instanceof Error ? error.message : 'Unable to publish candidate.')}</span>`); }
+        catch (error) { button.disabled = false; button.insertAdjacentHTML('afterend', `<span class="feedback" data-kind="error">${esc(errorMessage(error, 'Unable to publish candidate.'))}</span>`); }
       };
     });
   }).catch(() => { importList.innerHTML = '<span class="muted">Automated candidates unavailable.</span>'; });
