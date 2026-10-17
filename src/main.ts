@@ -1,5 +1,5 @@
 import * as echarts from 'echarts';
-import { createGrid, type ColDef, themeQuartz } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry, createGrid, type ColDef, themeQuartz } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { DATA } from './data';
@@ -7,6 +7,8 @@ import { getCurrentUser, signInWithMagicLink, signOut } from './services/auth';
 import { adminOverridePick, adminProvisionProfile, adminUpdateResult, loadAdminAuditLog, loadLiveLeague, submitPick, type LiveLeagueData } from './services/league';
 import { supabase, supabaseConfigured } from './services/supabase';
 import './style.css';
+
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 type Team = keyof typeof DATA.teamRace;
 type Player = keyof typeof DATA.playerRace;
