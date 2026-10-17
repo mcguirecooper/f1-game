@@ -7,3 +7,4 @@ dist/
 mcguirecooper.github.io/
 supabase/.temp/
 test-results/
+.tools/

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "lint": "eslint .",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest",
@@ -13,7 +14,8 @@
     "validate:season": "tsx scripts/validate-season.ts",
     "build:season:skeleton": "tsx scripts/build-season-skeleton.ts",
     "generate:season:sql": "tsx scripts/generate-season-sql.ts",
-    "fetch:season:results": "tsx scripts/fetch-f1-results.ts"
+    "fetch:season:results": "tsx scripts/fetch-f1-results.ts",
+    "persist:results:import": "tsx scripts/persist-results-import.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0",
@@ -21,14 +23,17 @@
     "echarts": "^5.6.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/vite": "^4.1.14",
     "@types/node": "^22.10.0",
     "cheerio": "^1.2.0",
+    "eslint": "^10.13.0",
     "supabase": "^2.121.0",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.20.6",
     "typescript": "~5.6.2",
+    "typescript-eslint": "^8.71.2",
     "vite": "^7.1.7",
     "vitest": "^3.2.4"
   }

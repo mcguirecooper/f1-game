@@ -79,6 +79,20 @@ export async function loadAdminAuditLog() {
   return data ?? [];
 }
 
+export async function loadResultImportRuns() {
+  if (!supabase) throw new Error('Supabase is not configured');
+  const { data, error } = await (supabase as any).from('result_import_runs').select('id,provider,retrieved_at,status,created_at,payload').order('created_at', { ascending: false }).limit(20);
+  if (error) throw error;
+  return data ?? [];
+}
+
+export async function adminPublishResultImport(importId: string, reason: string) {
+  if (!supabase) throw new Error('Supabase is not configured');
+  const { data, error } = await supabase.rpc('admin_publish_result_import' as any, { p_import_id: importId, p_reason: reason });
+  if (error) throw error;
+  return data;
+}
+
 export async function loadStandings() {
   if (!supabase) throw new Error('Supabase is not configured');
   const { data, error } = await supabase.from('standings').select('*').order('points', { ascending: false });

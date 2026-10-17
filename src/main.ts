@@ -2,7 +2,7 @@ import * as echarts from 'echarts';
 import { AllCommunityModule, ModuleRegistry, createGrid, type ColDef, themeQuartz } from 'ag-grid-community';
 import { DATA } from './data';
 import { getCurrentUser, signInWithMagicLink, signOut } from './services/auth';
-import { adminOverridePick, adminProvisionProfile, adminUpdateResult, loadAdminAuditLog, loadLiveLeague, submitPick, type LiveLeagueData } from './services/league';
+import { adminOverridePick, adminProvisionProfile, adminPublishResultImport, adminUpdateResult, loadAdminAuditLog, loadLiveLeague, loadResultImportRuns, submitPick, type LiveLeagueData } from './services/league';
 import { supabase, supabaseConfigured } from './services/supabase';
 import './style.css';
 
@@ -103,7 +103,7 @@ const raceAxisLabel = { color:'#8f99ad', rotate:40, interval:0, hideOverlap:fals
 const raceGrid = { left:45, right:20, top:20, bottom:40, containLabel:true };
 const playerRaceGrid = { left:42, right:15, top:15, bottom:40, containLabel:true };
 const constructorGrid = { left:100, right:15, top:15, bottom:20, containLabel:false };
-function setDataMode(_mode: 'demo' | 'live' | 'loading' | 'unavailable') {}
+function setDataMode(mode: 'demo' | 'live' | 'loading' | 'unavailable') { void mode; }
 
 const leaderboardGrid = createGrid($('leaderboard-grid'), { theme: themeQuartz.withParams({ backgroundColor:'#121826', foregroundColor:'#eaeef5', borderColor:'#253049', headerBackgroundColor:'#171f30', headerTextColor:'#8f99ad' }), rowData: order.map((player, i) => ({ rank:i+1, player, points:total[player], behind:i ? total[player] - total[order[0]] : 0, average:(total[player]/races.length).toFixed(1), missed:DATA.dns[player] ?? 0 })), columnDefs: [
   { field:'rank', headerName:'#', width:72, cellClass: p => p.value === 1 ? 'rank1' : '' }, { field:'player', headerName:'Player', flex:1 }, { field:'points', headerName:'Points', width:110, type:'numericColumn' }, { field:'behind', headerName:'Behind', width:110, valueFormatter:p => p.value === 0 ? '—' : String(p.value) }, { field:'average', headerName:'Avg / race', width:120 }, { field:'missed', headerName:'Missed', width:95 },
@@ -148,8 +148,6 @@ function renderRaceCommand() {
 
 function renderLiveAnalytics(data: LiveLeagueData) {
   if (!data.standings.length) return;
-  const raceById = new Map(data.races.map((race) => [race.id, race]));
-  const constructorById = new Map(data.constructors.map((constructor) => [constructor.id, constructor]));
   const scoredRaces = data.races.filter((race) => race.status === 'completed').sort((a, b) => a.round_number - b.round_number);
   const assignmentByRaceDriver = new Map(data.assignments.map((assignment) => [`${assignment.race_id}:${assignment.driver_id}`, assignment.constructor_id]));
   const scoreFor = (raceId: number, constructorId: number) => data.driverResults.reduce((total, result) => {
@@ -211,7 +209,6 @@ function renderLivePlayer(data: LiveLeagueData, playerId: string | null) {
   const scores = scoredRaces.map((race) => data.playerRaceScores.find((score) => score.player_id === playerId && score.race_id === race.id)?.points ?? 0);
   const standing = data.standings.find((item) => item.player_id === playerId);
   const totalPoints = standing?.points ?? scores.reduce((sum, score) => sum + score, 0);
-  const constructorById = new Map(data.constructors.map((constructor) => [constructor.id, constructor]));
   $('player-stats').innerHTML = `<div class="stat"><div class="k">Total</div><div class="v">${totalPoints}</div></div><div class="stat"><div class="k">Rank</div><div class="v">${Math.max(1, data.standings.indexOf(standing!) + 1)} / ${data.standings.length}</div></div><div class="stat"><div class="k">Avg / race</div><div class="v">${scoredRaces.length ? (totalPoints / scoredRaces.length).toFixed(1) : '0.0'}</div></div><div class="stat"><div class="k">Best race</div><div class="v">${Math.max(0, ...scores)}</div></div><div class="stat"><div class="k">Races scored</div><div class="v">${scores.filter((score) => score > 0).length}</div></div><div class="stat"><div class="k">Picks submitted</div><div class="v">${standing?.picks_submitted ?? 0}</div></div>`;
   playerRaceChart?.dispose();
   playerRaceChart = chart('player-race-chart', { tooltip:{ trigger:'axis' }, grid:playerRaceGrid, xAxis:{ type:'category', data:scoredRaces.map((race) => race.name), axisLabel:raceAxisLabel }, yAxis:{ type:'value', ...axis }, series:[{ type:'bar', data:scores, itemStyle:{ color:'#e8002d' } }] });
@@ -262,9 +259,31 @@ function renderAdminPanel(data: LiveLeagueData) {
   const panel = $('admin-panel');
   panel.style.display = isAdmin ? 'block' : 'none';
   if (!isAdmin) return;
-  const raceById = new Map(data.races.map((race) => [race.id, race]));
+  const adminGrid = panel.querySelector('.admin-grid')!;
+  let importCard = document.querySelector<HTMLElement>('#admin-import-card');
+  if (!importCard) {
+    importCard = document.createElement('div');
+    importCard.id = 'admin-import-card';
+    importCard.className = 'card';
+    importCard.innerHTML = '<h3>Automated result candidates</h3><p class="muted">The hourly importer queues official results here. Review the source and publish only after checking the candidate.</p><div id="admin-import-list" class="form-stack"></div>';
+    adminGrid.prepend(importCard);
+  }
+  const importList = importCard.querySelector<HTMLElement>('#admin-import-list')!;
+  importList.innerHTML = '<span class="muted">Loading candidates…</span>';
+  void loadResultImportRuns().then((runs: Array<{ id: string; provider: string; retrieved_at: string; status: string; created_at: string; payload: { results?: unknown[] } }>) => {
+    importList.innerHTML = runs.length ? runs.map((run) => `<div class="card"><div><b>${esc(run.status)}</b> · ${esc(run.provider)} · ${new Date(run.retrieved_at).toLocaleString()}</div><div class="muted">${run.payload?.results?.length ?? 0} result rows</div>${run.status === 'review_required' ? '<label>Reason<input class="inp wide import-reason" placeholder="Reviewed against official classification"></label><button class="btn import-publish">Publish candidate</button>' : ''}</div>`).join('') : '<span class="muted">No automated candidates yet.</span>';
+    importList.querySelectorAll<HTMLButtonElement>('.import-publish').forEach((button, index) => {
+      button.onclick = async () => {
+        const run = runs.filter((item) => item.status === 'review_required')[index];
+        const reason = button.parentElement?.querySelector<HTMLInputElement>('.import-reason')?.value.trim() ?? '';
+        if (!reason) { button.parentElement?.insertAdjacentHTML('beforeend', '<span class="feedback">Enter a review reason first.</span>'); return; }
+        button.disabled = true;
+        try { await adminPublishResultImport(run.id, reason); await loadLiveDashboard(); }
+        catch (error) { button.disabled = false; button.insertAdjacentHTML('afterend', `<span class="feedback">${esc(error instanceof Error ? error.message : 'Unable to publish candidate.')}</span>`); }
+      };
+    });
+  }).catch(() => { importList.innerHTML = '<span class="muted">Automated candidates unavailable.</span>'; });
   const driverById = new Map(data.drivers.map((driver) => [driver.id, driver]));
-  const constructorById = new Map(data.constructors.map((constructor) => [constructor.id, constructor]));
   $('admin-members').innerHTML = data.profiles.length ? data.profiles.map((profile) => `<tr><td>${esc(profile.display_name)}</td><td><span class="status-badge ${profile.role === 'admin' ? 'completed' : 'scheduled'}">${esc(profile.role)}</span></td><td>${new Date(profile.created_at).toLocaleDateString()}</td></tr>`).join('') : '<tr><td colspan="3" class="muted">No profiles provisioned yet.</td></tr>';
   ($('admin-member-save') as HTMLButtonElement).onclick = async () => {
     const message = $('admin-member-status');
@@ -360,5 +379,5 @@ function renderPickHistory() {
   for (const pick of picks) counts.set(pick.constructor_id!, (counts.get(pick.constructor_id!) ?? 0) + 1);
   $('pick-usage').innerHTML = `<span class="muted">Usage:</span> ${[...counts.entries()].sort((a, b) => b[1] - a[1]).map(([id, count]) => `<span class="usage-pill"><i class="swatch" style="background:${constructorById.get(id)?.color ?? '#8f99ad'}"></i>${esc(constructorById.get(id)?.name ?? 'Unknown')} ${count}×</span>`).join('')}`;
 }
-function renderPick() { if (!currentEmail) return; const liveRace = liveLeague?.races.find((race) => race.status === 'scheduled' && new Date(race.starts_at).getTime() > Date.now()); const race = liveRace ?? upcoming; activeLiveRaceId = liveRace?.id ?? null; const lockUTC = liveRace?.starts_at ?? upcoming.lockUTC; const locked = new Date(lockUTC).getTime() <= Date.now(); const liveConstructors = liveLeague?.constructors ?? []; let saved: {team:Team} | null = null; try { saved = JSON.parse(localStorage.getItem(pickKey) ?? 'null'); } catch { saved=null; } if (!selectedTeam && saved) selectedTeam=saved.team; $('next-race-title').textContent = `Next race: ${race.name}`; $('lock-info').innerHTML = locked ? '<b style="color:var(--warn)">Picks are locked.</b> The race has started.' : `<span class="timezone-list-label">Picks lock</span><span class="timezone-list">${formatUSRaceTimesHtml(lockUTC)}</span>`; $('team-grid').innerHTML = liveConstructors.length ? liveConstructors.map(constructor => `<button class="pickbtn ${selectedConstructorId===constructor.id?'sel':''}" aria-pressed="${selectedConstructorId===constructor.id}" data-constructor-id="${constructor.id}" ${locked?'disabled':''}><i class="swatch" style="background:${constructor.color}"></i>${esc(constructor.name)}</button>`).join('') : teams.map(team => `<button class="pickbtn ${selectedTeam===team?'sel':''}" aria-pressed="${selectedTeam===team}" data-team="${team}" ${locked?'disabled':''}><i class="swatch" style="background:${teamMeta[team].color}"></i>${teamMeta[team].name}</button>`).join(''); document.querySelectorAll<HTMLButtonElement>('.pickbtn').forEach(button => button.addEventListener('click', () => { if (liveLeague) { selectedConstructorId=Number(button.dataset.constructorId); } else { selectedTeam=button.dataset.team as Team; } renderPick(); })); renderRaceCommand(); $('submit-pick').style.display=locked || (supabaseConfigured && !liveLeague) ? 'none':'inline-block'; $('pick-status').textContent = supabaseConfigured ? (liveLeague ? 'Select a constructor, then submit.' : 'Loading the live 2026 schedule…') : saved ? `Your submitted pick: ${teamMeta[saved.team].name}` : 'No pick submitted yet.'; if (liveLeague) renderPickHistory(); }
+function renderPick() { if (!currentEmail) return; const liveRace = liveLeague?.races.find((race) => race.status === 'scheduled' && new Date(race.starts_at).getTime() > Date.now()); const race = liveRace ?? upcoming; activeLiveRaceId = liveRace?.id ?? null; const lockUTC = liveRace?.starts_at ?? upcoming.lockUTC; const locked = new Date(lockUTC).getTime() <= Date.now(); const liveConstructors = liveLeague?.constructors ?? []; let saved: {team:Team} | null = null; try { saved = JSON.parse(localStorage.getItem(pickKey) ?? 'null'); } catch (error) { console.warn('Unable to restore local pick.', error); } if (!selectedTeam && saved) selectedTeam=saved.team; $('next-race-title').textContent = `Next race: ${race.name}`; $('lock-info').innerHTML = locked ? '<b style="color:var(--warn)">Picks are locked.</b> The race has started.' : `<span class="timezone-list-label">Picks lock</span><span class="timezone-list">${formatUSRaceTimesHtml(lockUTC)}</span>`; $('team-grid').innerHTML = liveConstructors.length ? liveConstructors.map(constructor => `<button class="pickbtn ${selectedConstructorId===constructor.id?'sel':''}" aria-pressed="${selectedConstructorId===constructor.id}" data-constructor-id="${constructor.id}" ${locked?'disabled':''}><i class="swatch" style="background:${constructor.color}"></i>${esc(constructor.name)}</button>`).join('') : teams.map(team => `<button class="pickbtn ${selectedTeam===team?'sel':''}" aria-pressed="${selectedTeam===team}" data-team="${team}" ${locked?'disabled':''}><i class="swatch" style="background:${teamMeta[team].color}"></i>${teamMeta[team].name}</button>`).join(''); document.querySelectorAll<HTMLButtonElement>('.pickbtn').forEach(button => button.addEventListener('click', () => { if (liveLeague) { selectedConstructorId=Number(button.dataset.constructorId); } else { selectedTeam=button.dataset.team as Team; } renderPick(); })); renderRaceCommand(); $('submit-pick').style.display=locked || (supabaseConfigured && !liveLeague) ? 'none':'inline-block'; $('pick-status').textContent = supabaseConfigured ? (liveLeague ? 'Select a constructor, then submit.' : 'Loading the live 2026 schedule…') : saved ? `Your submitted pick: ${teamMeta[saved.team].name}` : 'No pick submitted yet.'; if (liveLeague) renderPickHistory(); }
 $('login-btn').addEventListener('click', async () => { const email = ($('login-email') as HTMLInputElement).value.trim(); const error = $('login-error'); if (!email.includes('@')) { error.textContent='Enter a valid email address.'; error.hidden=false; error.dataset.kind='error'; return; } error.hidden=true; try { if (supabaseConfigured) { await signInWithMagicLink(email); error.textContent='Check your email for a secure sign-in link.'; error.hidden=false; error.dataset.kind='success'; } else { localStorage.setItem(sessionKey, JSON.stringify({ email })); await renderAuth(); } } catch (err) { error.textContent = err instanceof Error ? err.message : 'Unable to send the sign-in link. Try again.'; error.hidden=false; error.dataset.kind='error'; } }); $('submit-pick').addEventListener('click', async () => { const button = $('submit-pick') as HTMLButtonElement; if (supabaseConfigured && activeLiveRaceId && selectedConstructorId) { button.disabled=true; $('pick-status').textContent='Submitting pick…'; try { await submitPick(activeLiveRaceId, selectedConstructorId); $('pick-status').textContent='Pick submitted successfully.'; await loadLiveDashboard(); } catch (err) { $('pick-status').textContent = err instanceof Error ? err.message : 'Unable to submit pick. Try again.'; } finally { button.disabled=false; } return; } if (!selectedTeam || supabaseConfigured) return; localStorage.setItem(pickKey, JSON.stringify({ team:selectedTeam, at:new Date().toISOString() })); renderPick(); }); if (supabase) supabase.auth.onAuthStateChange(() => { void renderAuth(); }); void renderAuth();

@@ -1,0 +1,31 @@
+name: Refresh F1 results candidate
+
+on:
+  schedule:
+    - cron: '15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: results-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Fetch and validate official results
+        run: npm run fetch:season:results -- --output /tmp/season-2026-results.json
+      - name: Queue candidate for admin review
+        run: npm run persist:results:import -- /tmp/season-2026-results.json
+        env:
+          SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
