@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 import * as cheerio from 'cheerio';
 import type { SeasonImport } from '../src/domain/season-import';
 
-const retrievedAt = '2026-10-16T00:00:00Z';
+const retrievedAt = new Date().toISOString();
 const races = [
   ['australia', 1279], ['china', 1280], ['japan', 1281], ['miami', 1284],
   ['canada', 1285], ['monaco', 1286], ['barcelona', 1287], ['austria', 1288],
@@ -56,12 +56,13 @@ for (const [raceKey, raceId] of races) {
 }
 
 const season = JSON.parse(await readFile(resolve('data/season-2026.json'), 'utf8')) as SeasonImport;
+const resultUrls = new Set(races.map(([raceKey, raceId]) => `https://www.formula1.com/en/results/2026/races/${raceId}/${raceKey === 'bahrain-malaysia' ? 'bahrain' : raceKey}/race-result`));
 season.source = {
   ...season.source,
   retrievedAt,
   notes: 'Schedule/roster skeleton plus official Formula 1 completed-race classifications. Review before loading results.',
   references: [
-    ...season.source.references,
+    ...season.source.references.filter((reference) => reference.kind !== 'results' || !resultUrls.has(reference.url)),
     ...races.map(([raceKey, raceId]) => ({
       kind: 'results' as const,
       url: `https://www.formula1.com/en/results/2026/races/${raceId}/${raceKey === 'bahrain-malaysia' ? 'bahrain' : raceKey}/race-result`,

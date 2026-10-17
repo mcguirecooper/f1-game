@@ -18,4 +18,4 @@ Use the FIA documents as the authority for final classifications, driver status,
 
 As of the initial source review, the Formula 1 calendar page presents 23 2026 rounds and lists the United States race as round 18. The FIA classifications page still exposes a 24-column layout containing Saudi Arabia and three United States columns. This must be resolved before the production seed is generated; the importer should reject a season file whose race count or round keys are not reconciled against the selected calendar snapshot.
 
-No season data has been imported yet.
+The reviewed 2026 schedule, roster, completed-race results, and historical picks have been loaded into the linked Supabase project. The checked-in JSON/SQL files remain reviewable import artifacts; the spreadsheet pick import was a one-off production operation and is intentionally not represented as a rerunnable seed.

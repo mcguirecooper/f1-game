@@ -22,6 +22,14 @@
 >   - `npm run generate:season:sql`
 > - Loaded the 2026 structural data and completed results into Supabase.
 > - Connected authenticated leaderboard loading and real pick submission to Supabase.
+> - Replaced the remaining demo-only leaderboard, title-race, player deep-dive, constructor, and pick-history views with live Supabase queries, while retaining the local demo fallback.
+> - Added the authenticated admin control room for schedule/status inspection, result corrections, pick overrides, audit history, and league-member provisioning.
+> - Added the `admin_provision_profile` RPC and kept admin authorization server-side through RLS/RPC checks.
+> - Registered `AllCommunityModule` for AG Grid and removed the legacy AG Grid theme CSS/classes, resolving console errors #272 and #106.
+> - Added Playwright smoke coverage and CI configuration. `npm run test:e2e` currently passes the two public smoke tests; authenticated tests remain opt-in via `E2E_STORAGE_STATE`.
+> - Imported the existing spreadsheet history into the live database: 204 unique picks total, including 170 picks for the 11 players with spreadsheet entries and 34 picks for Jamie & Meg McLane and Logan McLane.
+> - Corrected the spreadsheet schedule mapping: sheet `04. Bahrain` maps to app race 16, `Bahrain Grand Prix in Malaysia`; the other historical sheet rounds were mapped to the official app schedule by event identity.
+> - Created 13 email-backed league accounts/profiles and two historical-only player profiles with no email: Jamie & Meg McLane and Logan McLane. Cooper remains the administrator; all others are players.
 >
 > ## Current Supabase state
 >
@@ -33,7 +41,9 @@
 > - 11 constructors
 > - 506 race-specific assignments
 > - 374 driver result rows
-> - 0 profiles/picks
+> - 15 Auth users/profiles: 13 email-backed accounts and 2 historical-only users with `email = null`
+> - 204 imported picks; Jamie & Meg McLane and Logan McLane have 17 each
+> - The imported Bahrain picks are stored against race 16, `Bahrain Grand Prix in Malaysia`
 >
 > The season and results seeds are reviewable at `supabase/seed/2026-season-with-results.sql`. The seed is idempotent and does not create users, profiles, picks, or fantasy scores.
 >
@@ -43,27 +53,33 @@
 > - `137e917` — official 2026 result import and corrected seed
 > - `1909e57` — controlled season SQL loader
 > - `0d6e2ed` — official 2026 season skeleton
+> - `72ee93b` — admin member provisioning and live admin controls
+> - `213383f` — register AG Grid Community modules
+> - `e600bf4` — remove legacy AG Grid theme usage
+> - `a38f9d4` — Playwright configuration and smoke coverage
 >
-> ## Next implementation tasks
+> ## Remaining implementation tasks
 >
-> 1. Provision invited league members by creating `profiles` rows and assigning the administrator role where appropriate.
-> 2. Replace the remaining demo-only charts and player/constructor analysis with live queries from `standings`, `player_race_scores`, `constructor_race_scores`, `races`, and `driver_results`.
-> 3. Add a small authenticated pick-history query so the player can see their submitted picks and usage counts.
-> 4. Build the admin experience described in Phase 3: race status/schedule, result editing through `admin_update_result`, pick overrides through `admin_override_pick`, and audit history.
-> 5. Add Playwright coverage for magic-link/session handling, pick submission, lock behavior, and admin permissions.
-> 6. Add a repeatable results refresh/review process after each completed 2026 race; final FIA classifications should be used to reconcile the Formula 1 result snapshot where needed.
+> 1. Verify the latest GitHub Pages deployment in a fresh/incognito browser: magic-link redirect, live data loading, pick history, pick submission/lock behavior, and visibility of the admin control room for Cooper.
+> 2. Configure an SMTP provider and production Auth URL/redirect settings if the default Supabase email service becomes insufficient; avoid testing by repeatedly requesting links because of email rate limits.
+> 3. Extend Playwright with authenticated storage-state fixtures for player pick submission, locked-race rejection, admin-only controls, and historical-only players.
+> 4. Use the documented results refresh/review runbook in `data/README.md` after each completed 2026 race, reconciling the Formula 1 snapshot with final FIA classifications where needed.
+> 5. Decide whether historical-only Auth rows with `email = null` should remain in `auth.users` or be replaced by a dedicated historical-player model. They are intentionally not sign-in capable and should not be assigned an email later without an explicit migration plan.
+> 6. Consider adding a versioned, private import artifact or one-off import script for the spreadsheet data. The current import was executed directly against Supabase and should not be rerun blindly because it overwrites picks on conflict.
 >
 > ## Important handoff notes
 >
 > - Do not load artificial demo data into Supabase. `src/data.ts` is still intentionally artificial and is only a local fallback.
 > - The browser app must only receive `VITE_SUPABASE_URL` and the publishable key. Never put a service-role key or Supabase CLI token in frontend variables.
 > - The local Node installation used during development is at `/private/tmp/f1-node`; a new shell may need `export PATH="/private/tmp/f1-node/bin:$PATH"` before using `npm` or `npx`.
-> - The live dashboard currently switches the leaderboard and pick flow to Supabase after authentication; the remaining analytics charts still use the demo data and should be migrated next.
+> - The live dashboard switches to Supabase after authentication; unauthenticated/local failures still use the demo fallback intentionally.
+> - The spreadsheet import is complete in production but is not represented as a committed seed file. Preserve the corrected Bahrain mapping if the import is ever reproduced.
+> - Jamie & Meg McLane and Logan McLane have no email and therefore cannot sign in; they exist for historical standings and analytics only.
 > - GitHub Pages deployment requires repository variables in `mcguirecooper/f1-game` and Pages → Source = GitHub Actions.
 >
 > ## Verification
 >
-> `npm test -- --run` passes with 6 tests. `npm run build` passes with the expected Vite large-chunk warning. Browser QA has not yet been run in this environment.
+> `npm test -- --run` passes with 6 tests. `npm run build` passes with the expected Vite large-chunk warning. `npm run test:e2e` passes 2 public smoke tests and skips 2 authenticated tests when no storage state is configured. Production browser QA is still pending.
 
 Recommended production stack
 
