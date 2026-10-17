@@ -8,6 +8,15 @@
         "value": "inter",
         "createdAt": "2026-10-17T01:36:08.443Z",
         "reason": "user confirmed Inter is fine for now"
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "supabase/templates/magic_link.html"
+        ],
+        "createdAt": "2026-10-17T06:06:21.130Z",
+        "reason": "Intentional email-client compatibility: Arial is a broadly supported system font for reliable rendering across inboxes."
       }
     ]
   }

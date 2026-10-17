@@ -19,6 +19,8 @@ https://mcguirecooper.github.io/f1-game/
 
 In **Authentication → Providers → Email**, keep email enabled. The frontend now requests magic links through `signInWithOtp`; because public signup is disabled, only invited users can complete the flow.
 
+For the hosted project, copy the subject and HTML from `supabase/config.toml` and `supabase/templates/magic_link.html` into **Authentication → Email Templates → Magic Link**. The local CLI configuration already points the Magic Link template at that HTML file.
+
 Then, after installing the Supabase CLI:
 
 ```sh
