@@ -1,7 +1,5 @@
 import * as echarts from 'echarts';
 import { AllCommunityModule, ModuleRegistry, createGrid, type ColDef, themeQuartz } from 'ag-grid-community';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { DATA } from './data';
 import { getCurrentUser, signInWithMagicLink, signOut } from './services/auth';
 import { adminOverridePick, adminProvisionProfile, adminUpdateResult, loadAdminAuditLog, loadLiveLeague, submitPick, type LiveLeagueData } from './services/league';
@@ -40,7 +38,7 @@ document.querySelector('#app')!.innerHTML = `
       <p>13 players. 11 constructors. Each race week, pick one team: your score is the sum of its two drivers' finishing points.</p>
       <div class="chips"><span class="chip" id="data-mode"><i class="dot" style="background:var(--warn)"></i>Demo analytics</span><span class="chip"><i class="dot" style="background:var(--good)"></i>17 races scored</span><span class="chip"><i class="dot" style="background:#6692FF"></i>23-race season</span></div>
     </div>
-    <section id="leaderboard"><h2>Leaderboard</h2><p class="sub" id="leaderboard-sub">Demo standings from the original prototype dataset.</p><div class="card"><div id="leaderboard-grid" class="ag-theme-quartz-dark" style="height:465px;width:100%"></div></div></section>
+    <section id="leaderboard"><h2>Leaderboard</h2><p class="sub" id="leaderboard-sub">Demo standings from the original prototype dataset.</p><div class="card"><div id="leaderboard-grid" style="height:465px;width:100%"></div></div></section>
     <section id="title-race"><h2>The title race</h2><p class="sub">Cumulative points across the scored races. Select a line in the legend to focus on a player.</p><div class="card"><div id="cumulative-chart" class="chart tall"></div></div></section>
     <section id="player"><h2>Player deep dive</h2><p class="sub">Per-race scoring, championship rank, and constructor usage against the 9×2 + 2×3 rule.</p><select class="control" id="player-select"></select><div class="statgrid" id="player-stats"></div><div class="grid2"><div class="card"><h3>Points per race</h3><div id="player-race-chart" class="chart"></div></div><div class="card"><h3>Championship rank per race</h3><div id="player-rank-chart" class="chart"></div></div></div><div class="card" style="margin-top:20px"><h3>Constructor usage</h3><div id="usage-list"></div></div></section>
     <section id="constructors"><h2>Constructors</h2><p class="sub">Compare team strength and see how the league has distributed its picks.</p><div class="grid2"><div class="card"><h3>Season average points per race</h3><div id="avg-chart" class="chart"></div></div><div class="card"><h3>Team points by race</h3><select class="control" id="race-select"></select><div id="race-team-chart" class="chart"></div></div></div><div class="card" style="margin-top:20px"><h3>Picks per race</h3><div id="picks-chart" class="chart tall"></div><p class="muted">Stacked counts of how many players picked each constructor each race.</p></div></section>
