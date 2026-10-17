@@ -155,8 +155,11 @@ function renderLiveAnalytics(data: LiveLeagueData) {
   const raceById = new Map(data.races.map((race) => [race.id, race]));
   const constructorById = new Map(data.constructors.map((constructor) => [constructor.id, constructor]));
   const scoredRaces = data.races.filter((race) => race.status === 'completed').sort((a, b) => a.round_number - b.round_number);
-  const scoreFor = (raceId: number, constructorId: number) => data.playerRaceScores
-    .find((score) => score.race_id === raceId && score.constructor_id === constructorId)?.points ?? 0;
+  const assignmentByRaceDriver = new Map(data.assignments.map((assignment) => [`${assignment.race_id}:${assignment.driver_id}`, assignment.constructor_id]));
+  const scoreFor = (raceId: number, constructorId: number) => data.driverResults.reduce((total, result) => {
+    if (result.race_id !== raceId || result.status !== 'finished' || result.finishing_position == null) return total;
+    return total + (assignmentByRaceDriver.get(`${raceId}:${result.driver_id}`) === constructorId ? 23 - result.finishing_position : 0);
+  }, 0);
   const livePlayers = data.standings.map((standing) => standing.display_name ?? 'Unnamed player');
   const scoreRows = new Map<string, number>();
   for (const score of data.playerRaceScores) scoreRows.set(`${score.player_id}:${score.race_id}`, score.points ?? 0);
