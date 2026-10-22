@@ -425,7 +425,7 @@ function renderAdminPanel(data: LiveLeagueData) {
     importCard = document.createElement('div');
     importCard.id = 'admin-import-card';
     importCard.className = 'card';
-    importCard.innerHTML = '<h3>Automated result candidates</h3><p class="muted">The hourly importer queues official results here. Review the source and publish only after checking the candidate.</p><div id="admin-import-list" class="form-stack"></div>';
+    importCard.innerHTML = '<h3>Automated result candidates</h3><p class="muted">The daily importer queues only new or corrected official results. Review the source and publish only after checking the candidate.</p><div id="admin-import-list" class="form-stack"></div>';
     adminGrid.prepend(importCard);
   }
   const importList = importCard.querySelector<HTMLElement>('#admin-import-list')!;

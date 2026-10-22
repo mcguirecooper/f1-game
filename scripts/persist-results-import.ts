@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createClient } from '@supabase/supabase-js';
 import type { SeasonImport } from '../src/domain/season-import';
 import { validateSeasonImport } from '../src/domain/season-import';
+import { classifyResultChanges } from '../src/domain/result-import';
 
 const inputPath = process.argv[2] ?? 'data/season-2026-results.json';
 const url = process.env.SUPABASE_URL;
@@ -17,6 +18,22 @@ const candidateHash = createHash('sha256').update(JSON.stringify(payload)).diges
 const supabase = createClient(url, serviceRoleKey, { auth: { autoRefreshToken: false, persistSession: false } });
 const { data: season, error: seasonError } = await supabase.from('seasons').select('id').eq('year', payload.season.year).single();
 if (seasonError) throw seasonError;
+
+const { data: publishedRuns, error: publishedError } = await supabase
+  .from('result_import_runs')
+  .select('payload')
+  .eq('season_id', season.id)
+  .eq('status', 'published')
+  .order('reviewed_at', { ascending: false })
+  .limit(1);
+if (publishedError) throw publishedError;
+
+const publishedPayload = (publishedRuns?.[0]?.payload ?? {}) as Partial<SeasonImport>;
+const change = classifyResultChanges(payload.results, publishedPayload.results ?? []);
+if (change === 'unchanged') {
+  console.log('No new or corrected result data found; no admin review candidate recorded.');
+  process.exit(0);
+}
 
 const { data: existing } = await supabase.from('result_import_runs').select('id,status').eq('season_id', season.id).eq('candidate_hash', candidateHash).maybeSingle();
 if (existing) {

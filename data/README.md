@@ -63,4 +63,4 @@ Review the generated SQL diff before applying it:
 
 Apply only the reviewed SQL to the linked project, then verify race status, result-row counts, and affected fantasy scores in Supabase. Never apply an unreviewed fetch output, and do not rerun the historical spreadsheet-pick import.
 
-The fetch command records its retrieval timestamp and replaces previously recorded Formula 1 result references for the fetched races, so rerunning it does not accumulate duplicate source entries. The output remains a candidate until the FIA review and database verification are complete.
+The scheduled importer runs once every 24 hours. It compares result rows with the latest published candidate and does not create an admin review item for an unchanged snapshot. New result rows and corrections to published rows remain reviewable. The fetch command records its retrieval timestamp and replaces previously recorded Formula 1 result references for the fetched races, so rerunning it does not accumulate duplicate source entries. The output remains a candidate until the FIA review and database verification are complete.
