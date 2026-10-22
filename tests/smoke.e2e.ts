@@ -4,21 +4,20 @@ test.describe('F1 Game dashboard', () => {
   test('loads the dashboard shell and primary navigation', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle('F1 Game 2026 — Fantasy League');
-    await expect(page.getByText('F1 GAME', { exact: true })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Standings' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'My picks' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Statistics' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'F1 Game overview' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Standings', exact: true })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'My picks', exact: true })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Statistics', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Your next race decision' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Scoring system' })).toBeVisible();
   });
 
-  test('organizes analytics under Statistics', async ({ page }) => {
-    await page.goto('/#statistics');
-    await expect(page.getByRole('heading', { name: 'Statistics' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Title race' })).toBeVisible();
+  test('opens the existing analytics section from Statistics', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: 'Statistics' }).click();
+    await expect(page).toHaveURL(/#constructors$/);
     await expect(page.getByRole('heading', { name: 'Constructors' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Where the league is placing its bets' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Player deep dive' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Picks per race' })).toBeVisible();
   });
 
   test('shows a sign-in state for guests in My picks', async ({ page }) => {
