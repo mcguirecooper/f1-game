@@ -4,15 +4,31 @@ test.describe('F1 Game dashboard', () => {
   test('loads the dashboard shell and primary navigation', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle('F1 Game 2026 — Fantasy League');
-    await expect(page.getByText('F1 GAME 2026', { exact: true })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Leaderboard' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'My pick' })).toBeVisible();
+    await expect(page.getByText('F1 GAME', { exact: true })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Standings' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'My picks' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Statistics' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Your next race decision' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Scoring system' })).toBeVisible();
   });
 
+  test('organizes analytics under Statistics', async ({ page }) => {
+    await page.goto('/#statistics');
+    await expect(page.getByRole('heading', { name: 'Statistics' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Title race' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Constructors' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Where the league is placing its bets' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Player deep dive' })).toBeVisible();
+  });
+
+  test('shows a sign-in state for guests in My picks', async ({ page }) => {
+    await page.goto('/#my-pick');
+    await expect(page.getByRole('heading', { name: 'Sign in to play this round' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
+  });
+
   test('keeps the admin control room hidden until an authenticated admin session exists', async ({ page }) => {
-    await page.goto('/#admin-panel');
+    await page.goto('/#admin');
     await expect(page.locator('#admin-panel')).toBeHidden();
   });
 
@@ -30,12 +46,12 @@ test.describe('Authenticated dashboard', () => {
 
   test('shows the authenticated pick area', async ({ page }) => {
     await page.goto('/#my-pick');
-    await expect(page.getByRole('heading', { name: 'My pick' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'My pick history' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Make your pick' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Pick history' })).toBeVisible();
   });
 
   test('shows the admin control room for an admin profile', async ({ page }) => {
-    await page.goto('/#admin-panel');
+    await page.goto('/#admin');
     await expect(page.getByRole('heading', { name: 'Admin control room' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'League members' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'This week’s pick locks' })).toBeVisible();
