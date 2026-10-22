@@ -49,6 +49,56 @@ const order = [...players].sort((a,b) => total[b] - total[a]);
 const cumulative = Object.fromEntries(players.map(p => { let running = 0; const scores = DATA.playerRace[p].map(score => { running += value(score); return running; }); return [p, scores]; })) as Record<Player, number[]>;
 const rankAt = (raceIndex: number, player: Player) => [...players].sort((a,b) => cumulative[b][raceIndex] - cumulative[a][raceIndex]).indexOf(player) + 1;
 const upcoming = { id:'united-states', name:'United States Grand Prix', lockUTC:'2026-10-25T20:00:00Z' };
+type RaceIdentity = { flag:string; location:string; circuit:string; accent:string; shape:string };
+const circuitShapes = [
+  'M24 92c8-35 58-48 92-23 19 14 22 44 51 43 23-1 38-25 50-18 20 12 3 43-22 44-30 1-43-33-71-38-29-5-46 29-35 48 12 20 43 21 61 4',
+  'M24 48c27-25 68-19 76 12 6 24-21 35-37 48-18 14-5 35 19 34 28-1 43-25 63-37 24-14 53 1 53 25 0 25-36 33-59 18',
+  'M31 113c-18-21 0-49 29-48 26 1 33 23 52 23 23 0 31-37 59-45 26-7 47 14 39 37-8 23-37 28-54 11-16-16-4-40 16-42',
+  'M22 77c15-29 56-38 78-15 15 16 10 40 31 47 22 8 40-21 65-24 26-4 43 21 31 42-11 20-41 22-54 3-14-20 3-43 24-42',
+  'M35 39c28-16 68-6 74 23 5 25-22 38-20 57 2 18 29 25 48 11 20-15 20-45 43-51 25-7 44 17 35 38-10 24-44 28-59 7',
+];
+const raceIdentity: Record<string, RaceIdentity> = Object.fromEntries([
+  ['Australia Grand Prix', ['🇦🇺', 'Melbourne, Australia', 'Albert Park Circuit', '#6dd6a8']],
+  ['Australian Grand Prix', ['🇦🇺', 'Melbourne, Australia', 'Albert Park Circuit', '#6dd6a8']],
+  ['Australia', ['🇦🇺', 'Melbourne, Australia', 'Albert Park Circuit', '#6dd6a8']],
+  ['Chinese Grand Prix', ['🇨🇳', 'Shanghai, China', 'Shanghai International Circuit', '#e33d4d']],
+  ['China', ['🇨🇳', 'Shanghai, China', 'Shanghai International Circuit', '#e33d4d']],
+  ['Japanese Grand Prix', ['🇯🇵', 'Suzuka, Japan', 'Suzuka Circuit', '#e86b5b']],
+  ['Japan', ['🇯🇵', 'Suzuka, Japan', 'Suzuka Circuit', '#e86b5b']],
+  ['Miami Grand Prix', ['🇺🇸', 'Miami Gardens, Florida', 'Miami International Autodrome', '#28c7d9']],
+  ['Miami', ['🇺🇸', 'Miami Gardens, Florida', 'Miami International Autodrome', '#28c7d9']],
+  ['Canadian Grand Prix', ['🇨🇦', 'Montréal, Canada', 'Circuit Gilles-Villeneuve', '#e34c58']],
+  ['Canada', ['🇨🇦', 'Montréal, Canada', 'Circuit Gilles-Villeneuve', '#e34c58']],
+  ['Monaco Grand Prix', ['🇲🇨', 'Monte Carlo, Monaco', 'Circuit de Monaco', '#f3b34c']],
+  ['Monaco', ['🇲🇨', 'Monte Carlo, Monaco', 'Circuit de Monaco', '#f3b34c']],
+  ['Spanish Grand Prix — Barcelona-Catalunya', ['🇪🇸', 'Barcelona, Spain', 'Circuit de Barcelona-Catalunya', '#ef7659']],
+  ['Barcelona', ['🇪🇸', 'Barcelona, Spain', 'Circuit de Barcelona-Catalunya', '#ef7659']],
+  ['Austrian Grand Prix', ['🇦🇹', 'Spielberg, Austria', 'Red Bull Ring', '#e34e55']],
+  ['Austria', ['🇦🇹', 'Spielberg, Austria', 'Red Bull Ring', '#e34e55']],
+  ['British Grand Prix', ['🇬🇧', 'Silverstone, Great Britain', 'Silverstone Circuit', '#7aa8ff']],
+  ['Britain', ['🇬🇧', 'Silverstone, Great Britain', 'Silverstone Circuit', '#7aa8ff']],
+  ['Belgian Grand Prix', ['🇧🇪', 'Spa-Francorchamps, Belgium', 'Circuit de Spa-Francorchamps', '#d5a84b']],
+  ['Belgium', ['🇧🇪', 'Spa-Francorchamps, Belgium', 'Circuit de Spa-Francorchamps', '#d5a84b']],
+  ['Hungarian Grand Prix', ['🇭🇺', 'Budapest, Hungary', 'Hungaroring', '#e878aa']],
+  ['Hungary', ['🇭🇺', 'Budapest, Hungary', 'Hungaroring', '#e878aa']],
+  ['Dutch Grand Prix', ['🇳🇱', 'Zandvoort, Netherlands', 'Circuit Zandvoort', '#e88b3f']],
+  ['Netherlands', ['🇳🇱', 'Zandvoort, Netherlands', 'Circuit Zandvoort', '#e88b3f']],
+  ['Italian Grand Prix', ['🇮🇹', 'Monza, Italy', 'Autodromo Nazionale Monza', '#62c59d']],
+  ['Italy', ['🇮🇹', 'Monza, Italy', 'Autodromo Nazionale Monza', '#62c59d']],
+  ['Spanish Grand Prix — Madrid', ['🇪🇸', 'Madrid, Spain', 'Madrid Grand Prix Circuit', '#ef7659']],
+  ['Spain', ['🇪🇸', 'Madrid, Spain', 'Madrid Grand Prix Circuit', '#ef7659']],
+  ['Azerbaijan Grand Prix', ['🇦🇿', 'Baku, Azerbaijan', 'Baku City Circuit', '#72b6d8']],
+  ['Azerbaijan', ['🇦🇿', 'Baku, Azerbaijan', 'Baku City Circuit', '#72b6d8']],
+  ['Bahrain Grand Prix in Malaysia', ['🇧🇭', 'Sakhir, Bahrain', 'Bahrain International Circuit', '#d26a4f']],
+  ['Singapore Grand Prix', ['🇸🇬', 'Singapore', 'Marina Bay Street Circuit', '#c967c6']],
+  ['Mexico City Grand Prix', ['🇲🇽', 'Mexico City, Mexico', 'Autódromo Hermanos Rodríguez', '#e78a4d']],
+  ['São Paulo Grand Prix', ['🇧🇷', 'São Paulo, Brazil', 'Interlagos Circuit', '#70bd79']],
+  ['Las Vegas Grand Prix', ['🇺🇸', 'Las Vegas, Nevada', 'Las Vegas Strip Circuit', '#a77cff']],
+  ['Qatar Grand Prix', ['🇶🇦', 'Lusail, Qatar', 'Lusail International Circuit', '#d98d9e']],
+  ['Abu Dhabi Grand Prix', ['🇦🇪', 'Yas Marina, Abu Dhabi', 'Yas Marina Circuit', '#61b8c9']],
+  ['United States Grand Prix', ['🇺🇸', 'Austin, Texas', 'Circuit of the Americas', '#ed1735']],
+].map(([name, details], index) => [name, { flag:details[0], location:details[1], circuit:details[2], accent:details[3], shape:circuitShapes[index % circuitShapes.length] }]) as [string, RaceIdentity][]);
+const identityForRace = (name: string) => raceIdentity[name] ?? { flag:'🏁', location:'Race weekend', circuit:'Official circuit', accent:'#ed1735', shape:circuitShapes[0] };
 const usTimeZones = [
   ['ET', 'America/New_York'],
   ['CT', 'America/Chicago'],
@@ -65,18 +115,21 @@ const errorMessage = (error: unknown, fallback: string) => {
   if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') return error.message;
   return fallback;
 };
+const badgeText = (name: string) => name.split(/\s+/).map((part) => part.replace(/[^A-Za-z]/g, '')[0] ?? '').join('').slice(0, 3).toUpperCase();
 
 document.querySelector('#app')!.innerHTML = `
-  <header class="top"><nav class="nav"><span class="brand"><span class="mark"></span>F1 GAME 2026</span>
-    <a href="#leaderboard">Leaderboard</a><a href="#title-race">Title race</a><a href="#player">Players</a><a href="#constructors">Constructors</a><a href="#my-pick">My pick</a>
+  <header class="top"><nav class="nav"><a class="brand" href="#overview" aria-label="F1 Game overview"><span class="mark"></span><span>F1 GAME</span></a>
+    <div class="nav-links" aria-label="Primary navigation"><a class="active" href="#overview">Overview</a><a href="#leaderboard">Standings</a><a href="#my-pick">My picks</a><a href="#player">Players</a><a href="#constructors">Statistics</a></div><span id="nav-admin"></span>
     <span id="nav-auth" style="margin-left:auto"></span></nav></header>
   <main>
-    <section id="race-week" class="race-command" aria-labelledby="race-week-title"><div><h2 id="race-week-title">Your next race decision</h2><p class="sub" id="race-week-copy">Choose one constructor before the lock. Your pick stays private until the race starts.</p><div class="race-command-meta"><span class="status-badge scheduled" id="race-week-status">Next race</span><span id="race-week-lock">Picks lock across US time zones.</span></div></div><div class="race-command-action"><h3 id="race-command-title">United States Grand Prix</h3><a class="btn" href="#my-pick" id="race-command-cta">Sign in to make your pick</a></div></section>
-    <section id="leaderboard"><h2>Leaderboard</h2><div class="card"><div id="leaderboard-grid" class="leaderboard-grid"></div></div></section>
-    <section id="title-race"><h2>The title race</h2><p class="sub">Cumulative points across the scored races.</p><div id="cumulative-chart" class="chart tall" role="img" aria-label="Line chart showing cumulative league points by player across completed races"></div></section>
+    <section id="overview" class="overview" aria-labelledby="overview-title"><div class="overview-copy"><p class="eyebrow">SEASON 2026 <span>·</span> RACE WEEK</p><h1 id="overview-title">The championship<br><span>is yours to disrupt.</span></h1><p class="lede">One constructor per race. Every choice compounds. Welcome back to the league.</p><div class="overview-actions"><a class="btn" href="#my-pick">Make your pick <span aria-hidden="true">→</span></a><a class="text-link" href="#leaderboard">View standings <span aria-hidden="true">↗</span></a></div></div><div class="race-card"><div class="race-card-top"><span class="status-badge scheduled">ROUND ${races.length + 1}</span><span class="race-card-label">NEXT ON THE GRID</span></div><div class="circuit-line" aria-hidden="true"></div><h2 id="race-command-title">United States<br>Grand Prix</h2><p class="race-location">Austin, Texas <span>·</span> Circuit of the Americas</p><div class="race-date">OCT 25 <span>·</span> PICKS LOCK 1:00 PM PT</div><a class="race-card-link" href="#my-pick">Choose your constructor <span aria-hidden="true">→</span></a></div></section>
+    <section id="race-week" class="race-command" aria-labelledby="race-week-title"><div><div class="section-kicker"><span class="live-dot"></span><span id="race-week-status">NEXT RACE</span></div><h2 id="race-week-title">Your next race decision</h2><p class="sub" id="race-week-copy">Choose one constructor before the lock. Your pick stays private until the race starts.</p><div class="race-command-meta"><span id="race-week-lock">Picks lock across US time zones.</span></div></div><div class="race-command-action"><a class="btn" href="#my-pick" id="race-command-cta">Sign in to make your pick</a></div></section>
+    <section class="metric-strip" aria-label="Season summary"><div><span class="metric-label">LEAGUE LEADER</span><strong>${esc(order[0])}</strong><span>${total[order[0]]} points</span></div><div><span class="metric-label">RACES SCORED</span><strong>${races.length}<small> / ${races.length + 1}</small></strong><span>Next round is live</span></div><div><span class="metric-label">YOUR POSITION</span><strong>P${order.indexOf('Cooper McGuire' as Player) + 1}</strong><span>Keep climbing</span></div><div><span class="metric-label">POINTS TO LEAD</span><strong>−${Math.max(0, total[order[0]] - total['Cooper McGuire' as Player])}</strong><span>Within striking distance</span></div></section>
+    <section id="leaderboard" class="section-block"><div class="section-heading"><div><p class="eyebrow">THE COMPETITION</p><h2>Championship standings</h2><p class="sub">Every point matters. See who is setting the pace.</p></div><a class="text-link" href="#title-race">Open title race <span aria-hidden="true">↗</span></a></div><div class="card standings-card"><div id="leaderboard-grid" class="leaderboard-grid"></div></div></section>
+    <section id="title-race" class="section-block"><div class="section-heading"><div><p class="eyebrow">THE LONG GAME</p><h2>Title race</h2><p class="sub">Cumulative points across the scored races.</p></div></div><div class="chart-frame"><div id="cumulative-chart" class="chart tall" role="img" aria-label="Line chart showing cumulative league points by player across completed races"></div></div></section>
     <section id="player"><h2>Player deep dive</h2><p class="sub">Per-race scoring, championship rank, and constructor usage against the 9×2 + 2×3 rule.</p><label class="sr-only" for="player-select">Player to inspect</label><select class="control" id="player-select"></select><div class="statgrid" id="player-stats"></div><div class="grid2"><div class="chart-block"><h3>Points per race</h3><div id="player-race-chart" class="chart player-chart" role="img" aria-label="Bar chart showing the selected player's points per race"></div></div><div class="chart-block"><h3>Championship rank per race</h3><div id="player-rank-chart" class="chart player-chart" role="img" aria-label="Line chart showing the selected player's championship rank per race"></div></div></div><div class="card"><h3>Constructor usage</h3><div id="usage-list"></div></div></section>
     <section id="constructors"><h2>Constructors</h2><p class="sub">Compare team strength and see how the league has distributed its picks.</p><div class="grid2"><div class="chart-block"><div class="chart-title-row"><h3>Season average points per race</h3></div><div id="avg-chart" class="chart" role="img" aria-label="Bar chart comparing average points per race by constructor"></div></div><div class="chart-block"><div class="chart-title-row"><h3>Team points by race</h3><label class="sr-only" for="race-select">Race to inspect</label><select class="control" id="race-select"></select></div><div id="race-team-chart" class="chart" role="img" aria-label="Bar chart comparing constructor points for the selected race"></div></div></div><div class="chart-block chart-block-wide"><h3>Picks per race</h3><div id="picks-chart" class="chart tall" role="img" aria-label="Stacked bar chart showing constructor picks by race"></div></div></section>
-    <section id="my-pick"><h2>My pick</h2><p class="sub">Sign in with an invited email address to reveal your private pick controls.</p><div id="pick-ui" style="display:none"><div class="card"><h3 id="next-race-title"></h3><p class="sub" id="lock-info"></p><div id="team-grid" class="pickgrid"></div><div class="loginrow"><button class="btn" id="submit-pick">Submit pick</button><span class="feedback muted" id="pick-status" role="status" aria-live="polite" aria-atomic="true"></span></div></div><div class="card history-card"><h3>My pick history</h3><p class="muted">Your submitted constructors and scored points. Picks remain private until their race starts.</p><div class="table-scroll"><table><thead><tr><th>Race</th><th>Constructor</th><th>Status</th><th class="num">Points</th></tr></thead><tbody id="pick-history"><tr><td colspan="4" class="muted">Loading live picks…</td></tr></tbody></table></div><div id="pick-usage" class="usage-summary"></div></div></div></section>
+    <section id="my-pick" class="pick-section"><div class="section-heading"><div><p class="eyebrow">YOUR STRATEGY</p><h2>Make your pick</h2><p class="sub">Spend one constructor for the next race. Choose carefully—each team has a limited number of uses.</p></div></div><div id="pick-ui" style="display:none"><div class="pick-layout"><div class="card pick-card"><div class="pick-card-head"><div><p class="eyebrow">NEXT RACE</p><h3 id="next-race-title"></h3></div><div class="pick-rule"><span>9 × 2</span><small>uses</small><span>+ 2 × 3</span><small>uses</small></div></div><p class="sub" id="lock-info"></p><div class="pick-selection-bar"><span class="selection-label">SELECTED CONSTRUCTOR</span><strong id="selected-constructor-label">None selected</strong><span class="selection-hint">Your pick stays private until the race starts.</span></div><div id="team-grid" class="pickgrid"></div><div class="pick-submit-row"><button class="btn" id="submit-pick">Confirm constructor <span aria-hidden="true">→</span></button><span class="feedback muted" id="pick-status" role="status" aria-live="polite" aria-atomic="true"></span></div></div><aside class="pick-aside"><div class="strategy-note"><span class="note-index">01</span><h3>Play the long game.</h3><p>Save your strongest constructors for the rounds where they can make the biggest difference.</p></div><div class="strategy-note"><span class="note-index">02</span><h3>One decision. Every week.</h3><p>Your selection locks at lights out and scores from both drivers.</p></div></aside></div><div class="card history-card"><div class="history-head"><div><p class="eyebrow">YOUR SEASON</p><h3>Pick history</h3></div><p class="muted">Submitted constructors and scored points.</p></div><div class="table-scroll"><table><thead><tr><th>Race</th><th>Constructor</th><th>Status</th><th class="num">Points</th></tr></thead><tbody id="pick-history"><tr><td colspan="4" class="muted">Loading live picks…</td></tr></tbody></table></div><div id="pick-usage" class="usage-summary"></div></div></div></section>
     <section id="admin-panel" style="display:none"><h2>Admin control room</h2><p class="sub">Private tools for provisioning members, correcting published results, and managing exceptional pick changes. Every mutation uses an admin-only RPC and writes an audit record.</p><div class="admin-grid"><div class="card"><h3>League members</h3><p class="muted">Invite the email in Supabase Auth first, then paste its user UUID here to link it to the league.</p><div class="form-stack"><label>Auth user UUID<input class="inp wide" placeholder="00000000-0000-0000-0000-000000000000"></label><div class="form-row"><label>Display name<input class="inp" placeholder="Player name"></label><label>Role<select class="control" id="admin-member-role"><option value="player">Player</option><option value="admin">Admin</option></select></label></div><label>Reason<input class="inp wide" placeholder="Invitation or role assignment reason"></label><button class="btn" id="admin-member-save">Provision member</button><span class="feedback muted" id="admin-member-status" role="status" aria-live="polite"></span></div><div class="table-scroll" style="margin-top:16px"><table><thead><tr><th>Member</th><th>Role</th><th>Joined</th></tr></thead><tbody id="admin-members"></tbody></table></div></div><div class="card"><h3>Race schedule</h3><div class="table-scroll"><table><thead><tr><th>Round</th><th>Race</th><th>Start</th><th>Status</th></tr></thead><tbody id="admin-schedule"></tbody></table></div></div><div class="card"><h3>Edit driver result</h3><div class="form-stack"><label>Race<select class="control" id="admin-result-race"></select></label><label>Driver<select class="control" id="admin-result-driver"></select></label><div class="form-row"><label>Position<input class="inp" id="admin-result-position" type="number" min="1" max="22" placeholder="—"></label><label>Status<select class="control" id="admin-result-status"><option value="finished">Finished</option><option value="dnf">DNF</option><option value="dns">DNS</option><option value="dsq">DSQ</option></select></label></div><label>Reason<input class="inp wide" placeholder="Required audit reason"></label><button class="btn" id="admin-result-save">Save result correction</button><span class="feedback muted" id="admin-result-status-message" role="status" aria-live="polite"></span></div></div><div class="card"><h3>Override a pick</h3><div class="form-stack"><label>Player<select class="control" id="admin-pick-player"></select></label><label>Race<select class="control" id="admin-pick-race"></select></label><label>Constructor<select class="control" id="admin-pick-constructor"></select></label><label>Reason<input class="inp wide" placeholder="Required audit reason"></label><button class="btn" id="admin-pick-save">Save pick override</button><span class="feedback muted" id="admin-pick-status-message" role="status" aria-live="polite"></span></div></div><div class="card"><h3>Audit history</h3><div class="table-scroll"><table><thead><tr><th>When</th><th>Action</th><th>Entity</th><th>Reason</th></tr></thead><tbody id="admin-audit"></tbody></table></div></div></div></section>
     <section id="scoring"><h2>Scoring system</h2><div class="formula"><div class="fcard"><div class="big">23 − position</div><div class="cap">1st = 22 points, 2nd = 21 … 22nd = 1.</div></div><div class="fcard"><div class="big">0 points</div><div class="cap">DNF, DNS, and disqualification score zero.</div></div><div class="fcard"><div class="big">Driver A + B</div><div class="cap">Team score is the sum of both drivers.</div></div></div><div class="card"><h3>Worked example</h3><select class="control" id="demo-race"></select><div class="table-scroll"><table><thead><tr><th>Pos</th><th>Driver</th><th>Constructor</th><th>Status</th><th class="num">Points</th></tr></thead><tbody id="demo-body"></tbody></table></div><div id="demo-teams" style="margin-top:16px"></div><div class="note" id="demo-note" style="display:none"></div></div></section>
   </main>
@@ -90,6 +143,18 @@ document.querySelector('#app')!.innerHTML = `
       <p class="feedback" id="login-error" role="status" aria-live="polite" aria-atomic="true" hidden></p>
     </div>
   </div>`;
+
+document.querySelector('main')?.insertAdjacentHTML('afterbegin', '<div id="data-state" class="data-state" role="status" aria-live="polite" hidden></div>');
+document.querySelector('#my-pick .section-heading')?.insertAdjacentHTML('afterend', '<div id="pick-guest-state" class="state-panel pick-guest-state"><div class="state-icon">✦</div><div><h3>Sign in to play this round</h3><p>Your pick is private until race start. Use your invited email to unlock constructor selection and history.</p></div><button class="btn" id="pick-sign-in" type="button">Sign in</button></div>');
+
+const raceCard = document.querySelector<HTMLElement>('.race-card');
+raceCard?.insertAdjacentHTML('afterbegin', `<div class="race-identity"><span class="race-flag" id="race-card-flag" role="img" aria-label="United States flag">🇺🇸</span><span><b id="race-card-round">CIRCUIT OF THE AMERICAS</b><small id="race-card-series">FIA FORMULA 1 WORLD CHAMPIONSHIP</small></span></div><svg class="circuit-silhouette" viewBox="0 0 240 160" role="img" aria-label="Circuit of the Americas silhouette"><path d="M33 102c-9-27 17-52 46-46 23 5 27 30 48 26 19-4 27-30 52-29 29 1 42 33 28 54-16 23-48 14-54-8-6-23 15-38 32-28 16 9 8 31-9 34-19 3-31-11-43-24-15-17-34-31-54-23-20 9-20 39-2 50 21 13 44 2 55-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 102l-16 10m16-10l-9-14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`);
+if (raceCard) {
+  raceCard.querySelector<HTMLElement>('.circuit-line')?.remove();
+  raceCard.querySelector<HTMLElement>('.race-card-top .status-badge')?.setAttribute('id', 'race-card-round-status');
+  raceCard.querySelector<HTMLElement>('.race-location')?.setAttribute('id', 'race-card-location');
+  raceCard.querySelector<HTMLElement>('.race-date')?.setAttribute('id', 'race-card-date');
+}
 
 const adminMemberUserId = document.querySelector('#admin-panel input[placeholder^="00000000"]');
 const adminMemberName = document.querySelector('#admin-panel input[placeholder="Player name"]');
@@ -107,11 +172,34 @@ const raceAxisLabel = { color:'#8f99ad', rotate:40, interval:0, hideOverlap:fals
 const raceGrid = { left:45, right:20, top:20, bottom:40, containLabel:true };
 const playerRaceGrid = { left:42, right:15, top:15, bottom:40, containLabel:true };
 const constructorGrid = { left:100, right:15, top:15, bottom:20, containLabel:false };
-function setDataMode(mode: 'demo' | 'live' | 'loading' | 'unavailable') { void mode; }
+function setDataMode(mode: 'demo' | 'live' | 'loading' | 'unavailable') {
+  const state = $('data-state');
+  if (mode === 'loading') {
+    state.hidden = false;
+    state.className = 'data-state is-loading';
+    state.innerHTML = '<span class="state-spinner" aria-hidden="true"></span><span>Syncing the live league…</span>';
+    leaderboardGrid?.showLoadingOverlay();
+  } else if (mode === 'unavailable') {
+    state.hidden = false;
+    state.className = 'data-state is-error';
+    state.innerHTML = '<span class="state-icon" aria-hidden="true">!</span><span>Live league data is unavailable right now.</span><button class="state-retry" type="button">Retry</button>';
+    leaderboardGrid?.setGridOption('rowData', []);
+    leaderboardGrid?.showNoRowsOverlay();
+    state.querySelector('button')?.addEventListener('click', () => void loadLiveDashboard(), { once:true });
+  } else {
+    state.hidden = true;
+    state.innerHTML = '';
+    if (mode === 'demo') {
+      leaderboardGrid?.setGridOption('rowData', order.map((player, i) => ({ rank:i+1, player, points:total[player], behind:i ? total[player] - total[order[0]] : 0, average:(total[player]/races.length).toFixed(1), missed:DATA.dns[player] ?? 0 })));
+      leaderboardGrid?.hideOverlay();
+    }
+  }
+}
 
 const leaderboardGrid = createGrid($('leaderboard-grid'), { theme: themeQuartz.withParams({ backgroundColor:'#121826', foregroundColor:'#eaeef5', borderColor:'#253049', headerBackgroundColor:'#171f30', headerTextColor:'#8f99ad' }), rowData: order.map((player, i) => ({ rank:i+1, player, points:total[player], behind:i ? total[player] - total[order[0]] : 0, average:(total[player]/races.length).toFixed(1), missed:DATA.dns[player] ?? 0 })), columnDefs: [
   { field:'rank', headerName:'#', width:72, cellClass: p => p.value === 1 ? 'rank1' : '' }, { field:'player', headerName:'Player', flex:1 }, { field:'points', headerName:'Points', width:110, type:'numericColumn' }, { field:'behind', headerName:'Behind', width:110, valueFormatter:p => p.value === 0 ? '—' : String(p.value) }, { field:'average', headerName:'Avg / race', width:120 }, { field:'missed', headerName:'Missed', width:95 },
 ] as ColDef[], defaultColDef:{ sortable:true, resizable:true }, animateRows:true });
+leaderboardGrid.setGridOption('overlayNoRowsTemplate', '<div class="grid-empty-state"><span class="state-icon">⌁</span><b>No standings published yet</b><span>Results will appear here after the first scored race.</span></div>');
 
 let liveLeague: LiveLeagueData | null = null;
 let activeLiveRaceId: number | null = null;
@@ -128,16 +216,30 @@ function renderLiveLeaderboard(data: LiveLeagueData) {
     missed: Math.max(0, progress.completedCount - new Set(data.playerRaceScores.filter((score) => score.player_id === standing.player_id && completedRaceIds.has(score.race_id!)).map((score) => score.race_id)).size),
   }));
   leaderboardGrid.setGridOption('rowData', liveRows);
-  if (liveRows.length === 0) leaderboardGrid.showNoRowsOverlay();
+  if (liveRows.length === 0) leaderboardGrid.showNoRowsOverlay(); else leaderboardGrid.hideOverlay();
   setDataMode('live');
 }
 
 function renderRaceCommand() {
   const liveRace = liveLeague?.races.find((race) => race.status === 'scheduled' && new Date(race.starts_at).getTime() > Date.now());
   const race = liveRace ?? upcoming;
+  const identity = identityForRace(race.name);
   const lockUTC = liveRace?.starts_at ?? upcoming.lockUTC;
   const locked = new Date(lockUTC).getTime() <= Date.now();
   $('race-command-title').textContent = race.name;
+  $('race-card-flag').textContent = identity.flag;
+  $('race-card-flag').setAttribute('aria-label', `${identity.location} flag`);
+  $('race-card-round-status').textContent = `ROUND ${liveRace?.round_number ?? races.length + 1}`;
+  $('race-card-round').textContent = identity.circuit.toUpperCase();
+  $('race-card-series').textContent = 'FIA FORMULA 1 WORLD CHAMPIONSHIP';
+  $('race-card-location').textContent = identity.location;
+  const lockDate = new Date(lockUTC);
+  const dateLabel = new Intl.DateTimeFormat('en-US', { month:'short', day:'numeric', timeZone:'America/Los_Angeles' }).format(lockDate).toUpperCase();
+  const timeLabel = new Intl.DateTimeFormat('en-US', { hour:'numeric', minute:'2-digit', timeZone:'America/Los_Angeles', timeZoneName:'short' }).format(lockDate).toUpperCase();
+  $('race-card-date').textContent = `${dateLabel} · ${locked ? 'RACE STARTED' : `PICKS LOCK ${timeLabel}`}`;
+  const circuit = document.querySelector<SVGElement>('.circuit-silhouette');
+  circuit?.querySelector('path')?.setAttribute('d', identity.shape);
+  circuit?.style.setProperty('color', identity.accent);
   $('race-week-lock').innerHTML = locked ? '<b>Picks are locked</b> because this race has started.' : `<span class="timezone-list-label">Picks lock</span><span class="timezone-list">${formatUSRaceTimesHtml(lockUTC)}</span>`;
   $('race-week-status').textContent = locked ? 'Locked' : 'Next race';
   $('race-week-status').className = `status-badge ${locked ? 'cancelled' : 'scheduled'}`;
@@ -151,7 +253,11 @@ function renderRaceCommand() {
 }
 
 function renderLiveAnalytics(data: LiveLeagueData) {
-  if (!data.standings.length) return;
+  if (!data.standings.length) {
+    $('player-stats').innerHTML = '<div class="state-panel analytics-empty"><span class="state-icon">⌁</span><div><b>Player analysis is waiting</b><small>Standings and race results will unlock after the first scored round.</small></div></div>';
+    $('usage-list').innerHTML = '<div class="muted">Constructor usage will appear after picks are submitted.</div>';
+    return;
+  }
   const scoredRaces = data.races.filter((race) => race.status === 'completed').sort((a, b) => a.round_number - b.round_number);
   const assignmentByRaceDriver = new Map(data.assignments.map((assignment) => [`${assignment.race_id}:${assignment.driver_id}`, assignment.constructor_id]));
   const scoreFor = (raceId: number, constructorId: number) => data.driverResults.reduce((total, result) => {
@@ -292,11 +398,25 @@ function renderWeeklyPickLocks(data: LiveLeagueData, adminGrid: Element) {
   const players = data.profiles.filter((profile) => profile.role === 'player' || profile.role === 'admin');
   lockCard.innerHTML = `<h3>This week’s pick locks</h3><p class="muted">${race.round_number}. ${esc(race.name)} · Picks lock ${formatUSRaceTimesHtml(race.starts_at)}</p><div class="pick-lock-list">${players.length ? players.map((player) => { const locked = pickedPlayerIds.has(player.id); return `<div class="pick-lock-row"><span>${esc(player.display_name)}${player.role === 'admin' ? ' <span class="muted">(admin)</span>' : ''}</span><span class="status-badge ${locked ? 'completed' : 'scheduled'}">${locked ? 'Pick locked' : 'No pick'}</span></div>`; }).join('') : '<span class="muted">No league players provisioned yet.</span>'}</div>`;
 }
+function syncAdminRoute() {
+  const panel = $('admin-panel');
+  const adminNav = $('nav-admin');
+  adminNav.innerHTML = isAdmin ? '<a class="admin-nav-link" href="#admin">Admin</a>' : '';
+  const showAdmin = isAdmin && window.location.hash === '#admin';
+  panel.style.display = showAdmin ? 'block' : 'none';
+  panel.setAttribute('aria-hidden', String(!showAdmin));
+  document.body.classList.toggle('admin-route', showAdmin);
+}
 function renderAdminPanel(data: LiveLeagueData) {
   adminData = data;
   isAdmin = data.profiles.some((profile) => profile.id === currentUserId && profile.role === 'admin');
   const panel = $('admin-panel');
-  panel.style.display = isAdmin ? 'block' : 'none';
+  if (isAdmin && !panel.querySelector('.admin-route-head')) {
+    panel.querySelector(':scope > h2')?.remove();
+    panel.querySelector(':scope > .sub')?.remove();
+    panel.insertAdjacentHTML('afterbegin', '<div class="admin-route-head"><div><p class="eyebrow">PRIVATE WORKSPACE</p><h2>Admin control room</h2><p class="sub">Provision members, publish results, and manage exceptional pick changes.</p></div><a class="text-link" href="#overview">← Back to league</a></div>');
+  }
+  syncAdminRoute();
   if (!isAdmin) return;
   const adminGrid = panel.querySelector('.admin-grid')!;
   renderWeeklyPickLocks(data, adminGrid);
@@ -391,6 +511,7 @@ function renderAdminPanel(data: LiveLeagueData) {
   };
 }
 
+window.addEventListener('hashchange', syncAdminRoute);
 const sessionKey = 'f1demo.session'; const pickKey = 'f1demo.picks';
 let selectedTeam:Team | null = null;
 let currentEmail: string | null = null;
@@ -399,11 +520,12 @@ let loginTrigger: HTMLElement | null = null;
 const session = () => { try { return JSON.parse(localStorage.getItem(sessionKey) ?? 'null') as { email:string } | null; } catch { return null; } };
 function closeLoginDialog() { const dialog = $('login-dialog'); dialog.hidden = true; document.body.classList.remove('dialog-open'); loginTrigger?.focus(); loginTrigger = null; }
 function openLoginDialog(trigger?: HTMLElement) { const dialog = $('login-dialog'); loginTrigger = trigger ?? document.activeElement as HTMLElement; dialog.hidden = false; document.body.classList.add('dialog-open'); const email = $('login-email') as HTMLInputElement; email.focus(); email.select(); }
+$('pick-sign-in').addEventListener('click', (event) => openLoginDialog(event.currentTarget as HTMLElement));
 document.querySelectorAll<HTMLElement>('[data-login-close]').forEach((element) => element.addEventListener('click', closeLoginDialog));
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !$('login-dialog').hidden) closeLoginDialog(); });
 const raceCommandCta = $('race-command-cta'); raceCommandCta.addEventListener('click', (event) => { if (!currentEmail) { event.preventDefault(); openLoginDialog(raceCommandCta); } });
 async function loadLiveDashboard() { if (!supabaseConfigured || !currentEmail) return; setDataMode('loading'); try { liveLeague = await loadLiveLeague(); renderLiveLeaderboard(liveLeague); renderLiveAnalytics(liveLeague); renderAdminPanel(liveLeague); renderPick(); renderRaceCommand(); } catch (error) { setDataMode('unavailable'); $('pick-status').textContent = error instanceof Error ? error.message : 'Unable to load live league data. Try again.'; } }
-async function renderAuth() { const localUser = session(); const remoteUser = supabaseConfigured ? await getCurrentUser() : null; currentEmail = remoteUser?.email ?? localUser?.email ?? null; currentUserId = remoteUser?.id ?? null; const loggedIn = Boolean(currentEmail); if (!loggedIn) setDataMode('demo'); $('nav-auth').innerHTML = loggedIn ? `<button class="btn ghost" id="logout-btn">${esc(currentEmail!)} · Log out</button>` : `<button class="nav-login" type="button">Log in</button>`; $('pick-ui').style.display = loggedIn ? 'block' : 'none'; renderRaceCommand(); $('nav-auth').querySelector('.nav-login')?.addEventListener('click', (event) => openLoginDialog(event.currentTarget as HTMLElement)); if (loggedIn) { closeLoginDialog(); renderPick(); void loadLiveDashboard(); } $('logout-btn')?.addEventListener('click', async () => { if (supabaseConfigured) await signOut(); localStorage.removeItem(sessionKey); currentEmail=null; currentUserId=null; liveLeague=null; selectedTeam=null; selectedConstructorId=null; setDataMode('demo'); await renderAuth(); }); }
+async function renderAuth() { const localUser = session(); const remoteUser = supabaseConfigured ? await getCurrentUser() : null; currentEmail = remoteUser?.email ?? localUser?.email ?? null; currentUserId = remoteUser?.id ?? null; const loggedIn = Boolean(currentEmail); if (!loggedIn) setDataMode('demo'); $('nav-auth').innerHTML = loggedIn ? `<button class="btn ghost" id="logout-btn">${esc(currentEmail!)} · Log out</button>` : `<button class="nav-login" type="button">Log in</button>`; $('pick-ui').style.display = loggedIn ? 'block' : 'none'; $('pick-guest-state').style.display = loggedIn ? 'none' : 'flex'; renderRaceCommand(); syncAdminRoute(); $('nav-auth').querySelector('.nav-login')?.addEventListener('click', (event) => openLoginDialog(event.currentTarget as HTMLElement)); if (loggedIn) { closeLoginDialog(); renderPick(); void loadLiveDashboard(); } $('logout-btn')?.addEventListener('click', async () => { if (supabaseConfigured) await signOut(); localStorage.removeItem(sessionKey); currentEmail=null; currentUserId=null; isAdmin=false; liveLeague=null; selectedTeam=null; selectedConstructorId=null; syncAdminRoute(); setDataMode('demo'); await renderAuth(); }); }
 function renderPickHistory() {
   if (!liveLeague || !currentUserId) return;
   const raceById = new Map(liveLeague.races.map((race) => [race.id, race]));
@@ -419,5 +541,49 @@ function renderPickHistory() {
   for (const pick of picks) counts.set(pick.constructor_id!, (counts.get(pick.constructor_id!) ?? 0) + 1);
   $('pick-usage').innerHTML = `<span class="muted">Usage:</span> ${[...counts.entries()].sort((a, b) => b[1] - a[1]).map(([id, count]) => `<span class="usage-pill"><i class="swatch" style="background:${constructorById.get(id)?.color ?? '#8f99ad'}"></i>${esc(constructorById.get(id)?.name ?? 'Unknown')} ${count}×</span>`).join('')}`;
 }
-function renderPick() { if (!currentEmail) return; const liveRace = liveLeague?.races.find((race) => race.status === 'scheduled' && new Date(race.starts_at).getTime() > Date.now()); const race = liveRace ?? upcoming; activeLiveRaceId = liveRace?.id ?? null; const lockUTC = liveRace?.starts_at ?? upcoming.lockUTC; const locked = new Date(lockUTC).getTime() <= Date.now(); const liveConstructors = liveLeague?.constructors ?? []; let saved: {team:Team} | null = null; try { saved = JSON.parse(localStorage.getItem(pickKey) ?? 'null'); } catch (error) { console.warn('Unable to restore local pick.', error); } if (!selectedTeam && saved) selectedTeam=saved.team; $('next-race-title').textContent = `Next race: ${race.name}`; $('lock-info').innerHTML = locked ? '<b style="color:var(--warn)">Picks are locked.</b> The race has started.' : `<span class="timezone-list-label">Picks lock</span><span class="timezone-list">${formatUSRaceTimesHtml(lockUTC)}</span>`; $('team-grid').innerHTML = liveConstructors.length ? liveConstructors.map(constructor => `<button class="pickbtn ${selectedConstructorId===constructor.id?'sel':''}" aria-pressed="${selectedConstructorId===constructor.id}" data-constructor-id="${constructor.id}" ${locked?'disabled':''}><i class="swatch" style="background:${constructor.color}"></i>${esc(constructor.name)}</button>`).join('') : teams.map(team => `<button class="pickbtn ${selectedTeam===team?'sel':''}" aria-pressed="${selectedTeam===team}" data-team="${team}" ${locked?'disabled':''}><i class="swatch" style="background:${teamMeta[team].color}"></i>${teamMeta[team].name}</button>`).join(''); document.querySelectorAll<HTMLButtonElement>('.pickbtn').forEach(button => button.addEventListener('click', () => { if (liveLeague) { selectedConstructorId=Number(button.dataset.constructorId); } else { selectedTeam=button.dataset.team as Team; } renderPick(); })); renderRaceCommand(); $('submit-pick').style.display=locked || (supabaseConfigured && !liveLeague) ? 'none':'inline-block'; $('pick-status').textContent = supabaseConfigured ? (liveLeague ? 'Select a constructor, then submit.' : 'Loading the live 2026 schedule…') : saved ? `Your submitted pick: ${teamMeta[saved.team].name}` : 'No pick submitted yet.'; if (liveLeague) renderPickHistory(); }
+function renderPick() {
+  if (!currentEmail) return;
+  const liveRace = liveLeague?.races.find((race) => race.status === 'scheduled' && new Date(race.starts_at).getTime() > Date.now());
+  const race = liveRace ?? upcoming;
+  activeLiveRaceId = liveRace?.id ?? null;
+  const lockUTC = liveRace?.starts_at ?? upcoming.lockUTC;
+  const locked = new Date(lockUTC).getTime() <= Date.now();
+  $('pick-ui').classList.toggle('is-locked', locked);
+  const liveConstructors = liveLeague?.constructors ?? [];
+  let saved: {team:Team} | null = null;
+  try { saved = JSON.parse(localStorage.getItem(pickKey) ?? 'null'); } catch (error) { console.warn('Unable to restore local pick.', error); }
+  if (!selectedTeam && saved) selectedTeam=saved.team;
+  $('next-race-title').textContent = `Next race: ${race.name}`;
+  $('lock-info').innerHTML = locked ? '<b style="color:var(--warn)">Picks are locked.</b> The race has started.' : `<span class="timezone-list-label">Picks lock</span><span class="timezone-list">${formatUSRaceTimesHtml(lockUTC)}</span>`;
+  if (supabaseConfigured && !liveLeague) {
+    $('selected-constructor-label').textContent = 'Waiting for live schedule';
+    $('team-grid').innerHTML = '<div class="state-panel pick-loading-state"><span class="state-spinner" aria-hidden="true"></span><div><b>Loading constructors</b><small>Connecting to the live league…</small></div></div>';
+    ($('submit-pick') as HTMLButtonElement).style.display = 'none';
+    $('pick-status').textContent = 'Live pick controls will appear when the schedule is ready.';
+    renderRaceCommand();
+    return;
+  }
+  const selectedLiveConstructor = liveConstructors.find((constructor) => constructor.id === selectedConstructorId);
+  const selectedLabel = selectedLiveConstructor?.name ?? (selectedTeam ? teamMeta[selectedTeam].name : 'None selected');
+  $('selected-constructor-label').textContent = selectedLabel;
+  $('team-grid').innerHTML = liveConstructors.length ? liveConstructors.map((constructor) => {
+    const uses = liveLeague?.playerRaceScores.filter((score) => score.player_id === currentUserId && score.constructor_id === constructor.id).length ?? 0;
+    const selected = selectedConstructorId === constructor.id;
+    const maxed = uses >= 3;
+    return `<button class="pickbtn ${selected?'sel':''} ${maxed?'maxed':''}" aria-pressed="${selected}" data-constructor-id="${constructor.id}" ${locked || maxed ? 'disabled' : ''}><span class="constructor-badge" style="--team-color:${constructor.color}">${badgeText(constructor.name)}</span><span class="pick-team-copy"><b>${esc(constructor.name)}</b><small>${uses} / 3 uses</small></span><span class="pick-team-state">${selected ? 'Selected' : maxed ? 'Maxed' : 'Available'}</span></button>`;
+  }).join('') : teams.map((team) => {
+    const uses = DATA.usage['Cooper McGuire']?.[team] ?? 0;
+    const selected = selectedTeam === team;
+    const maxed = uses >= 3;
+    return `<button class="pickbtn ${selected?'sel':''} ${maxed?'maxed':''}" aria-pressed="${selected}" data-team="${team}" ${locked || maxed ? 'disabled' : ''}><span class="constructor-badge" style="--team-color:${teamMeta[team].color}">${badgeText(teamMeta[team].name)}</span><span class="pick-team-copy"><b>${teamMeta[team].name}</b><small>${uses} / 3 uses</small></span><span class="pick-team-state">${selected ? 'Selected' : maxed ? 'Maxed' : 'Available'}</span></button>`;
+  }).join('');
+  if (locked) $('team-grid').insertAdjacentHTML('afterbegin', '<div class="locked-banner"><span aria-hidden="true">🔒</span><div><b>Pick window closed</b><small>This race has started. Your next selection opens with the next round.</small></div></div>');
+  document.querySelectorAll<HTMLButtonElement>('.pickbtn').forEach((button) => button.addEventListener('click', () => { if (liveLeague) selectedConstructorId=Number(button.dataset.constructorId); else selectedTeam=button.dataset.team as Team; renderPick(); }));
+  renderRaceCommand();
+  const submitButton = $('submit-pick') as HTMLButtonElement;
+  submitButton.style.display = locked || (supabaseConfigured && !liveLeague) ? 'none' : 'inline-flex';
+  submitButton.disabled = locked || (liveLeague ? !selectedConstructorId : !selectedTeam);
+  $('pick-status').textContent = supabaseConfigured ? (liveLeague ? (selectedLiveConstructor ? `${selectedLiveConstructor.name} selected. Confirm when you’re ready.` : 'Choose an available constructor to continue.') : 'Loading the live 2026 schedule…') : saved ? `Your submitted pick: ${teamMeta[saved.team].name}` : 'Choose an available constructor to continue.';
+  if (liveLeague) renderPickHistory();
+}
 $('login-btn').addEventListener('click', async () => { const email = ($('login-email') as HTMLInputElement).value.trim(); const error = $('login-error'); if (!email.includes('@')) { error.textContent='Enter a valid email address.'; error.hidden=false; error.dataset.kind='error'; return; } error.hidden=true; try { if (supabaseConfigured) { await signInWithMagicLink(email); error.textContent='Check your email for a secure sign-in link.'; error.hidden=false; error.dataset.kind='success'; } else { localStorage.setItem(sessionKey, JSON.stringify({ email })); await renderAuth(); } } catch (err) { error.textContent = err instanceof Error ? err.message : 'Unable to send the sign-in link. Try again.'; error.hidden=false; error.dataset.kind='error'; } }); $('submit-pick').addEventListener('click', async () => { const button = $('submit-pick') as HTMLButtonElement; if (supabaseConfigured && activeLiveRaceId && selectedConstructorId) { button.disabled=true; $('pick-status').textContent='Submitting pick…'; try { await submitPick(activeLiveRaceId, selectedConstructorId); $('pick-status').textContent='Pick submitted successfully.'; await loadLiveDashboard(); } catch (err) { $('pick-status').textContent = err instanceof Error ? err.message : 'Unable to submit pick. Try again.'; } finally { button.disabled=false; } return; } if (!selectedTeam || supabaseConfigured) return; localStorage.setItem(pickKey, JSON.stringify({ team:selectedTeam, at:new Date().toISOString() })); renderPick(); }); if (supabase) supabase.auth.onAuthStateChange(() => { void renderAuth(); }); void renderAuth();
