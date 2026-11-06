@@ -161,6 +161,14 @@
       "name": "Oliver Bearman"
     },
     {
+      "code": "HIR",
+      "name": "Ryo Hirakawa"
+    },
+    {
+      "code": "CAM",
+      "name": "Rafael Câmara"
+    },
+    {
       "code": "HUL",
       "name": "Nico Hulkenberg"
     },
@@ -2403,12 +2411,12 @@
     },
     {
       "raceKey": "mexico",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "mexico",
-      "driverCode": "BEA",
+      "driverCode": "HIR",
       "constructorKey": "haas"
     },
     {
@@ -2513,12 +2521,12 @@
     },
     {
       "raceKey": "brazil",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "brazil",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -2623,12 +2631,12 @@
     },
     {
       "raceKey": "las-vegas",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "las-vegas",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -2733,12 +2741,12 @@
     },
     {
       "raceKey": "qatar",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "qatar",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -2843,12 +2851,12 @@
     },
     {
       "raceKey": "abu-dhabi",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "abu-dhabi",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {

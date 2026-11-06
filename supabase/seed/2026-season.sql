@@ -62,6 +62,8 @@ values
   ('Franco Colapinto', 'COL'),
   ('Esteban Ocon', 'OCO'),
   ('Oliver Bearman', 'BEA'),
+  ('Ryo Hirakawa', 'HIR'),
+  ('Rafael Câmara', 'CAM'),
   ('Nico Hulkenberg', 'HUL'),
   ('Gabriel Bortoleto', 'BOR'),
   ('Carlos Sainz', 'SAI'),
@@ -157,6 +159,11 @@ from (values
 ) as source(import_key, round_number, name, starts_at, status)
 join public.races r on r.round_number = source.round_number
 join public.seasons s on s.id = r.season_id and s.year = 2026;
+
+-- Reconcile race-specific assignments so a roster correction removes obsolete
+-- assignments from an earlier seed before inserting the current source snapshot.
+delete from public.constructor_assignments
+where race_id in (select race_id from _f1_import_races);
 
 insert into public.constructor_assignments(race_id, driver_id, constructor_id)
 select r.race_id, d.driver_id, c.constructor_id
@@ -569,8 +576,8 @@ from (values
   ('mexico', 'LIN', 'racing-bulls'),
   ('mexico', 'GAS', 'alpine'),
   ('mexico', 'COL', 'alpine'),
-  ('mexico', 'OCO', 'haas'),
   ('mexico', 'BEA', 'haas'),
+  ('mexico', 'HIR', 'haas'),
   ('mexico', 'HUL', 'audi'),
   ('mexico', 'BOR', 'audi'),
   ('mexico', 'SAI', 'williams'),
@@ -591,8 +598,8 @@ from (values
   ('brazil', 'LIN', 'racing-bulls'),
   ('brazil', 'GAS', 'alpine'),
   ('brazil', 'COL', 'alpine'),
-  ('brazil', 'OCO', 'haas'),
   ('brazil', 'BEA', 'haas'),
+  ('brazil', 'CAM', 'haas'),
   ('brazil', 'HUL', 'audi'),
   ('brazil', 'BOR', 'audi'),
   ('brazil', 'SAI', 'williams'),
@@ -613,8 +620,8 @@ from (values
   ('las-vegas', 'LIN', 'racing-bulls'),
   ('las-vegas', 'GAS', 'alpine'),
   ('las-vegas', 'COL', 'alpine'),
-  ('las-vegas', 'OCO', 'haas'),
   ('las-vegas', 'BEA', 'haas'),
+  ('las-vegas', 'CAM', 'haas'),
   ('las-vegas', 'HUL', 'audi'),
   ('las-vegas', 'BOR', 'audi'),
   ('las-vegas', 'SAI', 'williams'),
@@ -635,8 +642,8 @@ from (values
   ('qatar', 'LIN', 'racing-bulls'),
   ('qatar', 'GAS', 'alpine'),
   ('qatar', 'COL', 'alpine'),
-  ('qatar', 'OCO', 'haas'),
   ('qatar', 'BEA', 'haas'),
+  ('qatar', 'CAM', 'haas'),
   ('qatar', 'HUL', 'audi'),
   ('qatar', 'BOR', 'audi'),
   ('qatar', 'SAI', 'williams'),
@@ -657,8 +664,8 @@ from (values
   ('abu-dhabi', 'LIN', 'racing-bulls'),
   ('abu-dhabi', 'GAS', 'alpine'),
   ('abu-dhabi', 'COL', 'alpine'),
-  ('abu-dhabi', 'OCO', 'haas'),
   ('abu-dhabi', 'BEA', 'haas'),
+  ('abu-dhabi', 'CAM', 'haas'),
   ('abu-dhabi', 'HUL', 'audi'),
   ('abu-dhabi', 'BOR', 'audi'),
   ('abu-dhabi', 'SAI', 'williams'),

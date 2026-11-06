@@ -32,6 +32,7 @@ const drivers = [
   ['LAW', 'Liam Lawson', 'racing-bulls'], ['LIN', 'Arvid Lindblad', 'racing-bulls'],
   ['GAS', 'Pierre Gasly', 'alpine'], ['COL', 'Franco Colapinto', 'alpine'],
   ['OCO', 'Esteban Ocon', 'haas'], ['BEA', 'Oliver Bearman', 'haas'],
+  ['HIR', 'Ryo Hirakawa', 'haas'], ['CAM', 'Rafael Câmara', 'haas'],
   ['HUL', 'Nico Hulkenberg', 'audi'], ['BOR', 'Gabriel Bortoleto', 'audi'],
   ['SAI', 'Carlos Sainz', 'williams'], ['ALB', 'Alexander Albon', 'williams'],
   ['ALO', 'Fernando Alonso', 'aston-martin'], ['STR', 'Lance Stroll', 'aston-martin'],
@@ -90,7 +91,12 @@ const season: SeasonImport = {
   drivers: drivers.map(([code, name]) => ({ code, name })),
   races: races.map(([key, roundNumber, name, startsAt]) => ({ key, roundNumber, name, startsAt, status: 'scheduled' as const })),
   assignments: races.flatMap(([raceKey]) => drivers
-    .filter(([driverCode]) => !(raceKey === 'netherlands' || raceKey === 'italy' || raceKey === 'spain') || driverCode !== 'HAD')
+    .filter(([driverCode]) => {
+      if (driverCode === 'HIR') return raceKey === 'mexico';
+      if (driverCode === 'CAM') return ['brazil', 'las-vegas', 'qatar', 'abu-dhabi'].includes(raceKey);
+      if (driverCode === 'OCO') return !['mexico', 'brazil', 'las-vegas', 'qatar', 'abu-dhabi'].includes(raceKey);
+      return !(raceKey === 'netherlands' || raceKey === 'italy' || raceKey === 'spain') || driverCode !== 'HAD';
+    })
     .filter(([driverCode]) => driverCode !== 'TSU' || raceKey === 'netherlands' || raceKey === 'italy' || raceKey === 'spain')
     .map(([driverCode, , constructorKey]) => ({
       raceKey,

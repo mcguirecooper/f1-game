@@ -1,7 +1,7 @@
 {
   "source": {
     "provider": "Formula 1 official calendar and FIA official championship records",
-    "retrievedAt": "2026-10-16T00:00:00Z",
+    "retrievedAt": "2026-11-06T18:55:57.282Z",
     "notes": "Schedule/roster skeleton plus official Formula 1 completed-race classifications. Review before loading results.",
     "references": [
       {
@@ -31,93 +31,98 @@
       },
       {
         "kind": "results",
-        "url": "https://www.fia.com/events/fia-formula-one-world-championship/season-2026/2026-classifications",
-        "retrievedAt": "2026-10-16T00:00:00Z"
-      },
-      {
-        "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1279/australia/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1280/china/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1281/japan/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1284/miami/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1285/canada/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1286/monaco/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
-        "url": "https://www.formula1.com/en/results/2026/races/1287/barcelona/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "url": "https://www.formula1.com/en/results/2026/races/1287/barcelona-catalunya/race-result",
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1288/austria/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1289/great-britain/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1290/belgium/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1291/hungary/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1292/netherlands/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1293/italy/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1294/spain/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1295/azerbaijan/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1308/bahrain/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       },
       {
         "kind": "results",
         "url": "https://www.formula1.com/en/results/2026/races/1296/singapore/race-result",
-        "retrievedAt": "2026-10-16T00:00:00Z"
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
+      },
+      {
+        "kind": "results",
+        "url": "https://www.formula1.com/en/results/2026/races/1297/united-states/race-result",
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
+      },
+      {
+        "kind": "results",
+        "url": "https://www.formula1.com/en/results/2026/races/1298/mexico/race-result",
+        "retrievedAt": "2026-11-06T18:55:57.282Z"
       }
     ]
   },
@@ -246,6 +251,14 @@
       "name": "Oliver Bearman"
     },
     {
+      "code": "HIR",
+      "name": "Ryo Hirakawa"
+    },
+    {
+      "code": "CAM",
+      "name": "Rafael Câmara"
+    },
+    {
       "code": "HUL",
       "name": "Nico Hulkenberg"
     },
@@ -288,133 +301,133 @@
       "roundNumber": 1,
       "name": "Australian Grand Prix",
       "startsAt": "2026-03-08T04:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "china",
       "roundNumber": 2,
       "name": "Chinese Grand Prix",
       "startsAt": "2026-03-15T07:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "japan",
       "roundNumber": 3,
       "name": "Japanese Grand Prix",
       "startsAt": "2026-03-29T05:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "miami",
       "roundNumber": 4,
       "name": "Miami Grand Prix",
       "startsAt": "2026-05-03T20:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "canada",
       "roundNumber": 5,
       "name": "Canadian Grand Prix",
       "startsAt": "2026-05-24T20:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "monaco",
       "roundNumber": 6,
       "name": "Monaco Grand Prix",
       "startsAt": "2026-06-07T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "barcelona",
       "roundNumber": 7,
       "name": "Spanish Grand Prix — Barcelona-Catalunya",
       "startsAt": "2026-06-14T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "austria",
       "roundNumber": 8,
       "name": "Austrian Grand Prix",
       "startsAt": "2026-06-28T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "great-britain",
       "roundNumber": 9,
       "name": "British Grand Prix",
       "startsAt": "2026-07-05T14:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "belgium",
       "roundNumber": 10,
       "name": "Belgian Grand Prix",
       "startsAt": "2026-07-19T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "hungary",
       "roundNumber": 11,
       "name": "Hungarian Grand Prix",
       "startsAt": "2026-07-26T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "netherlands",
       "roundNumber": 12,
       "name": "Dutch Grand Prix",
       "startsAt": "2026-08-23T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "italy",
       "roundNumber": 13,
       "name": "Italian Grand Prix",
       "startsAt": "2026-09-06T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "spain",
       "roundNumber": 14,
       "name": "Spanish Grand Prix — Madrid",
       "startsAt": "2026-09-13T13:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "azerbaijan",
       "roundNumber": 15,
       "name": "Azerbaijan Grand Prix",
       "startsAt": "2026-09-26T11:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "bahrain-malaysia",
       "roundNumber": 16,
       "name": "Bahrain Grand Prix in Malaysia",
       "startsAt": "2026-10-04T12:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "singapore",
       "roundNumber": 17,
       "name": "Singapore Grand Prix",
       "startsAt": "2026-10-11T12:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "united-states",
       "roundNumber": 18,
       "name": "United States Grand Prix",
       "startsAt": "2026-10-25T20:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "mexico",
       "roundNumber": 19,
       "name": "Mexico City Grand Prix",
       "startsAt": "2026-11-01T20:00:00Z",
-      "status": "scheduled"
+      "status": "completed"
     },
     {
       "key": "brazil",
@@ -2488,12 +2501,12 @@
     },
     {
       "raceKey": "mexico",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "mexico",
-      "driverCode": "BEA",
+      "driverCode": "HIR",
       "constructorKey": "haas"
     },
     {
@@ -2598,12 +2611,12 @@
     },
     {
       "raceKey": "brazil",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "brazil",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -2708,12 +2721,12 @@
     },
     {
       "raceKey": "las-vegas",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "las-vegas",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -2818,12 +2831,12 @@
     },
     {
       "raceKey": "qatar",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "qatar",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -2928,12 +2941,12 @@
     },
     {
       "raceKey": "abu-dhabi",
-      "driverCode": "OCO",
+      "driverCode": "BEA",
       "constructorKey": "haas"
     },
     {
       "raceKey": "abu-dhabi",
-      "driverCode": "BEA",
+      "driverCode": "CAM",
       "constructorKey": "haas"
     },
     {
@@ -5219,6 +5232,270 @@
     {
       "raceKey": "singapore",
       "driverCode": "BOR",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "ANT",
+      "finishingPosition": 1,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "LEC",
+      "finishingPosition": 2,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "VER",
+      "finishingPosition": 3,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "HAM",
+      "finishingPosition": 4,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "NOR",
+      "finishingPosition": 5,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "HAD",
+      "finishingPosition": 6,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "PIA",
+      "finishingPosition": 7,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "RUS",
+      "finishingPosition": 8,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "LAW",
+      "finishingPosition": 9,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "GAS",
+      "finishingPosition": 10,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "HUL",
+      "finishingPosition": 11,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "LIN",
+      "finishingPosition": 12,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "BOR",
+      "finishingPosition": 13,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "OCO",
+      "finishingPosition": 14,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "STR",
+      "finishingPosition": 15,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "ALO",
+      "finishingPosition": 16,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "ALB",
+      "finishingPosition": 17,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "SAI",
+      "finishingPosition": 18,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "PER",
+      "finishingPosition": 19,
+      "status": "finished"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "BOT",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "COL",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "united-states",
+      "driverCode": "BEA",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "VER",
+      "finishingPosition": 1,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HAM",
+      "finishingPosition": 2,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "ANT",
+      "finishingPosition": 3,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "LEC",
+      "finishingPosition": 4,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "NOR",
+      "finishingPosition": 5,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "RUS",
+      "finishingPosition": 6,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "LAW",
+      "finishingPosition": 7,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "BOR",
+      "finishingPosition": 8,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HAD",
+      "finishingPosition": 9,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HIR",
+      "finishingPosition": 10,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "ALB",
+      "finishingPosition": 11,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "SAI",
+      "finishingPosition": 12,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "PIA",
+      "finishingPosition": 13,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "HUL",
+      "finishingPosition": 14,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "COL",
+      "finishingPosition": 15,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "PER",
+      "finishingPosition": 16,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "GAS",
+      "finishingPosition": 17,
+      "status": "finished"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "LIN",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "BEA",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "BOT",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "STR",
+      "finishingPosition": null,
+      "status": "dnf"
+    },
+    {
+      "raceKey": "mexico",
+      "driverCode": "ALO",
       "finishingPosition": null,
       "status": "dnf"
     }
